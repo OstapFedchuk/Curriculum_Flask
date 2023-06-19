@@ -1,0 +1,14 @@
+.titolo {
+    background-color: blue;
+    color: white;
+    border: 2px solid blue;
+    border-radius: 10px;
+    width: 20%;
+    padding: 1%;
+    text-align: center;
+}
+
+.menu a {
+    text-decoration: none;
+    color: black;
+}
