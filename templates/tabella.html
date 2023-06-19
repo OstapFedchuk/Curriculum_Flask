@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+   <body>
+   
+      <table border = 1>
+         <thead>
+            <td>Nome</td>
+            <td>Email</td>
+            <td>Citta</td>
+         </thead>
+         
+         {% for row in rows %}
+            <tr>
+               <td>{{row["nome"]}}</td>
+               <td>{{row["email"]}}</td>
+               <td> {{ row["citta"]}}</td>
+            </tr>
+         {% endfor %}
+      </table>
+      
+      <a href = "/">Ritorna in home</a>
+      
+   </body>
+</html>
