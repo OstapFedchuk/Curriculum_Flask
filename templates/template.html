@@ -7,6 +7,8 @@
     <title>Flask Parent</title>
 </head>
 <body>
+    {% block content %}
+    {% endblock %}
     <header>
         <div id="container">
             <h1 class="titolo">Primo Web App</h1>
@@ -15,25 +17,10 @@
                 <li><a href="{{ url_for('home') }}">Home</li>
                     <li><a href="{{ url_for('login') }}">Log In</li>
             </ul>
-            <form action = "{{ url_for('addrec') }}" method = "POST">
-                <h3>Informazioni delle persone</h3>
-                <label>Nome</label> <br>
-                <input type="text" id="nome" class="inp" placeholder="Tuo Nome...">
-                <br><br>
-                <label>Email</label> <br>
-                <input type="text" id="email" class="inp" placeholder="Tua Email...">
-                <br><br>
-                <label>City</label> <br>
-                <input type="text" id="oggetto" class="inp" placeholder="Tua Citta...">
-                <br><br>
-                <input type = "submit" value = "submit" /><br>
-             </form>
         </strong></nav>
         </div>
     </header>
 
-    {% block content %}
-    {% endblock %}
 
 </body>
 </html>

@@ -3,7 +3,6 @@ import sqlite3 as sql
 
 app = Flask(__name__)
 
-
 #esecuzione del sito
 @app.route("/")
 def home():
@@ -24,20 +23,20 @@ def addrec():
             email = request.form['email']
             citta = request.form['citta']
 
-            with sql.connect("database.db") as conn:
-                cur = conn.cursor()
-                cur.execute("INSERT INTO persone (nome,email,citta) VALUES(?,?,?)", (nome,email,citta) )
+            conn = sql.connect("database.db")
+            cur = conn.cursor()
+            cur.execute("INSERT INTO persone (nome,email,citta) VALUES(?,?,?)", (nome,email,citta) )
 
-                conn.commit()
-                messaggio = "Record Aggiunti con Successo"
+            conn.commit()
+            messaggio = "Record Aggiunti con Successo"
+            conn.close() 
+        
         except:
             conn.rollback()
             messaggio = "Errore nell'inserzione"
 
-        finally: 
+        finally:
             return render_template("risultato.html", messaggio=messaggio)
-            conn.close()
-
 
 @app.route("/tabella")
 def tabella():
