@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, flash
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username, password):
@@ -37,6 +37,8 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
+
 
         register_user_to_db(username, password)
         return redirect(url_for('index'))
