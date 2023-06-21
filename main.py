@@ -1,47 +1,81 @@
-from flask import Flask, render_template, request
-import sqlite3 as sql
+import sqlite3
+from flask import Flask, redirect, url_for, render_template, request, session
 
+#funzione che memorizza il username e password nel database
+def register_user_to_db(username, password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    conn.commit()
+    conn.close()
+
+#funzione che controlla se sono stati inseriti il username e la password nel database
+def check_user(username,password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT username,password FROM users WHERE username = ? AND password = ?", (username, password))
+    
+    result = cur.fetchone()
+    if result:
+        return True
+    else:
+        return False
+
+#inizio programma   
 app = Flask(__name__)
+app.secret_key = '2006'
 
-#esecuzione del sito
-@app.route("/")
-def home():
-    title = "Home"
-    return render_template("home.html", title=title)
-
-#Visualizzazione della parte di login
-@app.route("/login")
-def login():
+#pagina iniziale del sito
+@app.route('/')
+def index():
     return render_template("login.html")
 
-#Aggiunta dei record
-@app.route("/addrec", methods=['POST', 'GET'])
-def addrec():
+#pagina della registrazione
+@app.route('/register', methods=["POST", "GET"])
+def register():
+    #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
-        try:
-            nome = request.form['nome']
-            email = request.form['email']
-            citta = request.form['citta']
+        username = request.form('username')
+        password = request.form('password') 
 
-            conn = sql.connect("database.db")
-            cur = conn.cursor()
-            cur.execute("INSERT INTO persone (nome,email,citta) VALUES(?,?,?)", (nome,email,citta) )
+        register_user_to_db(username, password)
+        return redirect(url_for('index'))
+    
+    else:
+        return render_template('register.html')
 
-            conn.commit()
-            messaggio = "Record Aggiunti con Successo"
-            conn.close() 
-        
-        except:
-            conn.rollback()
-            messaggio = "Errore nell'inserzione"
+#pagina del login    
+@app.route('/login', methods=["POST", "GET"])
+def login():
+    #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
+    if request.method == 'POST':
+        username = request.form('username')
+        password = request.form('password') 
 
-        finally:
-            return render_template("risultato.html", messaggio=messaggio)
+        if check_user(username, password):
+            session['username'] = username
+
+        return redirect(url_for('home'))
+    
+    else:
+        return redirect(url_for('index'))
+
+@app.route("/home", methods=["POST", "GET"])
+def home():
+    if 'username' in session:
+        return render_template('home.html', username=session['username'])
+    else:
+        return "Username or password è sbagliata"
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route("/tabella")
 def tabella():
-    conn = sql.connect("database.db")
-    conn.row_factory = sql.Row
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
 
     cur = conn.cursor()
     cur.execute("SELECT * from persone")
