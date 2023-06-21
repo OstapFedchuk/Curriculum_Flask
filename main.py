@@ -35,8 +35,8 @@ def index():
 def register():
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
-        username = request.form('username')
-        password = request.form('password') 
+        username = request.form['username']
+        password = request.form['password']
 
         register_user_to_db(username, password)
         return redirect(url_for('index'))
@@ -49,8 +49,8 @@ def register():
 def login():
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
-        username = request.form('username')
-        password = request.form('password') 
+        username = request.form['username']
+        password = request.form['password']
 
         if check_user(username, password):
             session['username'] = username
@@ -65,7 +65,7 @@ def home():
     if 'username' in session:
         return render_template('home.html', username=session['username'])
     else:
-        return "Username or password è sbagliata"
+        return render_template("errore.html")
 
 @app.route('/logout')
 def logout():
