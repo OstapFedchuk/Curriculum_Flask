@@ -78,7 +78,7 @@ def tabella():
     conn.row_factory = sqlite3.Row
 
     cur = conn.cursor()
-    cur.execute("SELECT * from persone")
+    cur.execute("SELECT * from users")
 
     rows = cur.fetchall()
     return render_template("tabella.html", rows=rows)
