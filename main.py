@@ -40,6 +40,7 @@ app.secret_key = '2006'
 @app.route('/')
 def index():
     return render_template("login.html")
+    
 
 #pagina della registrazione
 @app.route('/register', methods=["POST", "GET"])
@@ -84,9 +85,9 @@ def home():
 @app.route('/home1', methods=["POST", "GET"])
 def home1():
     if 'username' in session:
-        return render_template("user_taken.html")
-    else:
         return render_template("home1.html")
+    else:
+        return render_template("user_taken.html")
         
 @app.route('/logout')
 def logout():
