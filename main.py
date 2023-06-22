@@ -1,5 +1,7 @@
 import sqlite3
-from flask import Flask, redirect, url_for, render_template, request, session, flash
+from flask import Flask, redirect, url_for, render_template, request, session
+
+global_username = ""
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username, password):
@@ -39,20 +41,24 @@ app.secret_key = '2006'
 #pagina iniziale del sito
 @app.route('/')
 def index():
-    return render_template("login.html")
+    return render_template("index.html")
     
 
 #pagina della registrazione
 @app.route('/register', methods=["POST", "GET"])
 def register():
+    error = False
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
+        password = request.form['password']
 
         if check_user_exist(username,):
-            session['username'] = username
-        
-        return redirect(url_for('home1'))
+            error = True
+            
+        else:
+            register_user_to_db(username,password)
+            return redirect(url_for('index'))
     
     else:
         return render_template('register.html')
@@ -64,14 +70,17 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        error = False
 
         if check_user(username, password):
-            session['username'] = username
-
-        return redirect(url_for('home'))
+            global_username = username
+            return redirect(url_for('index'))
+        else:
+            error = True
+            #return render_template("login.html")
     
     else:
-        return redirect(url_for('index'))
+        return render_template('login.html')
 
 #per il controllo durante il login
 @app.route("/home", methods=["POST", "GET"])
@@ -84,7 +93,7 @@ def home():
 #per il controllo durante la registrazione
 @app.route('/home1', methods=["POST", "GET"])
 def home1():
-    if 'username' in session:
+    if username in session:
         return render_template("home1.html", username=session['username'])
     else:
         return render_template("user_taken.html")
