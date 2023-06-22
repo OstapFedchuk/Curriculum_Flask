@@ -84,10 +84,8 @@ def home():
 @app.route('/home1', methods=["POST", "GET"])
 def home1():
     if 'username' in session:
-        return render_template('home1.html', username=session['username'])
-    else:
         return render_template("user_taken.html")
-
+        
 @app.route('/logout')
 def logout():
     session.clear()
