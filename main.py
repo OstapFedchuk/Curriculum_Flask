@@ -85,6 +85,8 @@ def home():
 def home1():
     if 'username' in session:
         return render_template("user_taken.html")
+    else:
+        return render_template("home1.html")
         
 @app.route('/logout')
 def logout():
