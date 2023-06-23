@@ -6,7 +6,7 @@ body {
 
 #ulheader {
 	border: 2px solid black;
-    width: 98%;
+    width: 100%;
 	list-style-type: none;
 	margin-top: 0;
 	padding: 1%;
@@ -38,22 +38,11 @@ body {
 div {
     border: 5px solid #d6ccc2;
     position: absolute;
-    top: 6%;
+    top: 6.5%;
     right: 0;
+    width: 20%;
     height: 10%;
-    width: 15%;
     margin: 0;
-}
-
-#foto {
-    width: 50px;
-	height: 50px;
-	border: 2px solid black;
-	border-radius: 50%; 
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 5%;
 }
 
 footer {
