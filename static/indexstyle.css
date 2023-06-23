@@ -36,12 +36,11 @@ body {
 }
 
 div {
-    border: 5px solid #d6ccc2;
     position: absolute;
-    top: 6.5%;
+    top: 7%;
     right: 0;
-    width: 20%;
     height: 10%;
+    width: 15%;
     margin: 0;
 }
 
@@ -53,11 +52,4 @@ footer {
     justify-content: center;
     margin-top: 6%;
     bottom: 0;
-}
-
-.userfoto {
-    position: absolute;
-    top: 10%;
-    right: 0;
-    margin: 0;
 }

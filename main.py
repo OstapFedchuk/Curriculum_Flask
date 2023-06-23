@@ -1,8 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 
-global_username = ""
-
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,password):
     conn = sqlite3.connect('database.db')
@@ -41,7 +39,12 @@ app.secret_key = '2006'
 #pagina iniziale del sito
 @app.route('/')
 def index():
-    return render_template("index.html")
+    if request.method == "GET":
+        if request.args.get('username'):
+            username = request.args.get('username')
+        else:
+            username = "Guest"
+    return render_template("index.html", global_username=username)
     
 
 #REGISTRAZIONE
@@ -77,8 +80,7 @@ def login():
         error = False
 
         if check_user(username, password):
-            global_username = username
-            return redirect(url_for('index'))
+            return redirect(url_for('index', username=username))
         else:
             error = True
             return render_template("login.html", error=error)
