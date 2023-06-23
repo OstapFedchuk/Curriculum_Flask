@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 
-#global_username = ""
+global_username = ""
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,password):
