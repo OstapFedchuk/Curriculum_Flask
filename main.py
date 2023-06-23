@@ -1,10 +1,10 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 
-global_username = ""
+#global_username = ""
 
 #funzione che memorizza il username e password nel database
-def register_user_to_db(username, password):
+def register_user_to_db(username,email,fullname,age,password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     cur.execute("INSERT INTO users (username,email,fullname,age,password) VALUES (?, ?, ?, ?, ?)", (username,email,fullname,age,password))
@@ -61,7 +61,7 @@ def register():
             return render_template("register.html", error=error)
             
         else:
-            register_user_to_db(username,password)
+            register_user_to_db(username,email,fullname,age,password)
             return redirect(url_for('index'))
     
     else:

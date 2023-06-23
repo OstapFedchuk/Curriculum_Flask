@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/indexstyle.css">
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <ul id="ulheader">
+            <li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
+            <li class="liheader"><a href="{{ url_for('login') }}" class="oggheader">Login</a></li>
+            <li class="liheader"><a href="{{ url_for('register') }}" class="oggheader">Sign Up</a></li>
+            <li class="liheader"><a href="index.html" class="oggheader">About</a></li>
+        </ul>
+    </header>
+    <div id="container">
+        <img src="images/user.png" alt="user" class="image">Ciao, Guest
+    </div>
     <h1>Benvenuto nel mio sito</h1>
     <ul>
         <li><a href="{{ url_for('login') }}">Login</a></li>

@@ -1,0 +1,44 @@
+body {
+	background: beige;
+	margin: 0;
+}
+
+#ulheader {
+	border: 2px solid black;
+	list-style-type: none;
+	margin: 0;
+	padding: 1%;
+	overflow: hidden;
+	background-color: #d6ccc2;
+	text-align: center;
+}
+
+.liheader {
+	display: inline;
+	padding: 10%;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.liheader:hover {
+	background-color: #edede9;
+}
+
+.oggheader {
+	text-decoration: none;
+	color: black;
+}
+
+.container {
+    display:flex;
+    position: relative;
+    border: 2px solid black;
+    border-radius:10px;
+    width: 300px;
+    height: 100px;
+}
+
+.image {
+    width: 50px;
+    height: 50px;
+}
