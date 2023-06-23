@@ -45,23 +45,23 @@
         <form action="/register" method="POST">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="Username" name="username"  placeholder="Username">
+              <input type="text" class="form-control" id="Username" name="username"  placeholder="JoBar20_">
             </div>
             <div class="mb-3">
               <label for="Email" class="form-label">Email</label>
               <input type="text" class="form-control" id="Email" name="email" placeholder="name@example.com">
             </div>
             <div class="mb-3">
-              <label for="nomecompleto" class="form-label">Name</label>
-              <input type="text" class="form-control" id="nomecompleto" name="Name" placeholder="Josh Barston">
+              <label for="fullname" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Josh Barston">
             </div>
             <div class="mb-3">
-              <label for="date" class="form-label">Age</label>
-              <input type="date" class="form-control" id="date" name="date">
+              <label for="age" class="form-label">Age</label>
+              <input type="text" class="form-control" id="age" name="age" placeholder="25">
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password">
             </div>
             {% block content %}
               {% if error %}
@@ -72,7 +72,7 @@
           </form>
           <br>
           <!--btn btn-primary btn-sm componente di Bootstrap che crea un bottone (sm = small, lg = large)-->
-          <b>Hai già un account? </b><a href="/login" class="btn btn-primary btn-sm">Login</a>
+          <b>Hai già un account? </b><a href="/login" class="btn btn-primary">Login</a>
     </div>
 </body>
 </html>

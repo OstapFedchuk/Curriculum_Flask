@@ -7,7 +7,7 @@ global_username = ""
 def register_user_to_db(username, password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    cur.execute("INSERT INTO users (username,email,fullname,age,password) VALUES (?, ?, ?, ?, ?)", (username,email,fullname,age,password))
     conn.commit()
     conn.close()
 
@@ -51,6 +51,9 @@ def register():
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
+        fullname = request.form['fullname']
+        age = request.form['age']
         password = request.form['password']
 
         if check_user_exist(username,):
