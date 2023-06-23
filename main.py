@@ -44,7 +44,7 @@ def index():
     return render_template("index.html")
     
 
-#pagina della registrazione
+#REGISTRAZIONE
 @app.route('/register', methods=["POST", "GET"])
 def register():
     error = False
@@ -55,6 +55,7 @@ def register():
 
         if check_user_exist(username,):
             error = True
+            return render_template("register.html", error=error)
             
         else:
             register_user_to_db(username,password)
@@ -63,7 +64,7 @@ def register():
     else:
         return render_template('register.html')
 
-#pagina del login    
+#LOGIN   
 @app.route('/login', methods=["POST", "GET"])
 def login():
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
@@ -77,26 +78,11 @@ def login():
             return redirect(url_for('index'))
         else:
             error = True
-            #return render_template("login.html")
+            return render_template("login.html", error=error)
     
     else:
         return render_template('login.html')
 
-#per il controllo durante il login
-@app.route("/home", methods=["POST", "GET"])
-def home():
-    if 'username' in session:
-        return render_template('home.html', username=session['username'])
-    else:
-        return render_template("errore.html")
-    
-#per il controllo durante la registrazione
-@app.route('/home1', methods=["POST", "GET"])
-def home1():
-    if username in session:
-        return render_template("home1.html", username=session['username'])
-    else:
-        return render_template("user_taken.html")
         
 @app.route('/logout')
 def logout():
