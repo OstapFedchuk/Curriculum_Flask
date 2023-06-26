@@ -93,7 +93,10 @@ def login():
         return render_template('login.html')
 
 
-            
+@app.route('/about')
+def about():
+    return render_template("about.html")
+           
 @app.route('/logout')
 def logout():
     session.clear()
