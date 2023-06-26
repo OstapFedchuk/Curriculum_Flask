@@ -1,10 +1,9 @@
 body {
-	background: beige;
-	margin: 0;
-    display: flex;
-}
+    margin: 20%;
+    background-color: beige;
+  }
 
-#ulheader {
+  #ulheader {
 	border: 2px solid black;
     width: 100%;
 	list-style-type: none;
@@ -35,41 +34,37 @@ body {
 	color: black;
 }
 
-#textdiv {
-    animation: mymove 5s infinite;
-    margin: 10px;
-    padding: 5%;
-}
+  label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+  }
 
-@keyframes mymove {
-    from {font-size: 20px;}
-    to {font-size: 50px;}
-}
+  .container { 
+    position: relative; 
+  }
 
-#myfoto {
-    border: 5px solid #d6ccc2;
+  .center {
+    margin: 0;
     position: absolute;
-    top: 12%;
-    right: 10%;
-    height: 75%;
-}
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
 
+  h1 {
+    margin: 20%;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-footer {
+  footer {
     width: 100%;
 	border: 2px solid black;
 	background-color: #d6ccc2;
     position: absolute;
     justify-content: center;
-    margin-top: 6%;
+    margin-bottom: 0;
     bottom: 0;
-}
-
-#user {
-    position: absolute;
-    top: 7%;
-    right: 0;
-    height: 10%;
-    width: 15%;
-    margin: 0;
+    left: 0;
 }
