@@ -13,6 +13,37 @@
         background-color: beige;
       }
 
+      #ulheader {
+	      border: 2px solid #d6ccc2;
+        width: 100%;
+	      list-style-type: none;
+	      margin-top: 0;
+	      padding: 1%;
+	      overflow: hidden;
+	      background-color: #d6ccc2;
+	      text-align: center;
+        top: 0;
+        left: 0;
+        position: fixed;
+        justify-content: center;
+      }
+
+      .liheader {
+	      display: inline;
+	      padding: 10%;
+	      font-weight: bold;
+	      font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .liheader:hover {
+	      background-color: #edede9;
+      }
+
+      .oggheader {
+	      text-decoration: none;
+	      color: black;
+      }
+
       label {
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bold;
@@ -36,9 +67,28 @@
         text-align: center;
         font-family: Arial, Helvetica, sans-serif;
       }
+
+      footer {
+        border: 2px solid #d6ccc2;
+        background-color: #d6ccc2;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        padding-top: 1%;
+      }
     </style>
 </head>
 <body>
+  <header>
+    <ul id="ulheader">
+        <li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
+        <li class="liheader"><a href="{{ url_for('login') }}" class="oggheader">Login</a></li>
+        <li class="liheader"><a href="{{ url_for('register') }}" class="oggheader">Sign Up</a></li>
+        <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+    </ul>
+  </header>
   <h1><b>SIGN UP</b></h1>
   <div class="container">
     <div class ="col-xs-2" id="center">
@@ -74,5 +124,8 @@
           <!--btn btn-primary btn-sm componente di Bootstrap che crea un bottone (sm = small, lg = large)-->
           <b>Hai già un account? </b><a href="/login" class="btn btn-primary">Login</a>
     </div>
+    <footer>
+      <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
+    </footer>
 </body>
 </html>

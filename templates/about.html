@@ -5,10 +5,10 @@
 		<link rel="stylesheet" href="aboutstyle.css">
 	</head>
     <style>
-        body {
+body {
 	background: #edede9;
 	margin: 0;
-
+	padding: 0;
 }
 
 hr.linea {
@@ -42,6 +42,7 @@ h1 {
 	right: 15%;
 	padding: 20px;
 	margin: auto;
+	z-index: -1;  /*Serve per mettere un qualsiasi oggetto sotto un altro*/
 }
 
 #sinistra {
@@ -72,7 +73,9 @@ h1 {
 }
 
 #ulheader {
-	border: 2px solid black;
+	width: 100%;
+	position: fixed;
+	border: 2px solid #d6ccc2;
 	list-style-type: none;
 	margin: 0;
 	padding: 1%;
@@ -98,7 +101,7 @@ h1 {
 }
 
 footer {
-	border: 2px solid black;
+	border: 2px solid #d6ccc2;
 	background-color: #d6ccc2;
 }
 
@@ -186,6 +189,7 @@ footer {
 			<p>Disponibile su richiesta</p>
 			<br>
 		</div>
+		<div></div>
 		<footer>
 			<h2  style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Seguimi su</h2>
 			<ul id="ulfooter">
