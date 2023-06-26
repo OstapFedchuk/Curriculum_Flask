@@ -35,14 +35,29 @@ body {
 	color: black;
 }
 
-div {
-    position: absolute;
-    top: 7%;
-    right: 0;
-    height: 10%;
-    width: 15%;
-    margin: 0;
+#textdiv {
+	animation: mymove 5s infinite;
+    margin: 10px;
+    padding: 5%;
+    font-size: 20px;
 }
+
+@keyframes mymove {
+    50% {
+		font-weight: bold;
+		font-style: italic;
+		font-size: 50px;
+	}
+}
+
+#myfoto {
+    border: 5px solid #d6ccc2;
+    position: absolute;
+    top: 12%;
+    right: 10%;
+    height: 75%;
+}
+
 
 footer {
     width: 100%;
@@ -52,4 +67,13 @@ footer {
     justify-content: center;
     margin-top: 6%;
     bottom: 0;
+}
+
+#user {
+    position: absolute;
+    top: 7%;
+    right: 0;
+    height: 10%;
+    width: 15%;
+    margin: 0;
 }
