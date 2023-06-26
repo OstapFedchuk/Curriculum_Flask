@@ -1,5 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
+from datetime import timedelta
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,password):
@@ -79,6 +80,9 @@ def login():
         password = request.form['password']
         error = False
 
+        if username:
+            session['username'] = username[1]
+
         if check_user(username, password):
             return redirect(url_for('index', username=username))
         else:
@@ -88,7 +92,8 @@ def login():
     else:
         return render_template('login.html')
 
-        
+
+            
 @app.route('/logout')
 def logout():
     session.clear()
