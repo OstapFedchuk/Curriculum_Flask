@@ -35,15 +35,18 @@ body {
 	color: black;
 }
 
-#textdiv {
-    animation: mymove 5s infinite;
-    margin: 10px;
-    padding: 5%;
+.animated-text {
+    font-size: 20px;
+    animation: mymove 5s infinite alternate;
 }
 
 @keyframes mymove {
-    from {font-size: 20px;}
-    to {font-size: 50px;}
+    0% {
+        font-size: 20px;
+    }
+    100% {
+        font-size: 50px;
+    }
 }
 
 #myfoto {
