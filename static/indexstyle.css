@@ -35,17 +35,32 @@ body {
 	color: black;
 }
 
+#textdiv  {
+    position: absolute;
+    top: 25%;
+    right: 10%;
+}
+
 .animated-text {
-    font-size: 20px;
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: bold;
     animation: mymove 5s infinite alternate;
 }
 
 @keyframes mymove {
     0% {
-        font-size: 20px;
+        font-size: 50px;
+        font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', Times, serif;
     }
     100% {
-        font-size: 50px;
+        font-size: 120px;
+        font-style: italic;
+        font-weight: bold;
+        font-family: 'Times New Roman', Times, serif;
     }
 }
 
@@ -53,7 +68,8 @@ body {
     border: 5px solid #d6ccc2;
     position: absolute;
     top: 12%;
-    right: 20%;
+    left: 0;
+    margin-left: 5%;
     height: 75%;
 }
 

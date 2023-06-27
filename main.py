@@ -92,6 +92,9 @@ def login():
     else:
         return render_template('login.html')
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 @app.route('/about')
 def about():
