@@ -20,31 +20,38 @@
         </header>
         <!-- Wrapper container -->
         <div class="container py-4">
-
+            <div class="contact">
+                <h2>Contacts</h2>
+                <h3>Contact me by completing the form</h3>
+                <h2></h2>
+            </div>
             <!-- Bootstrap 5 starter form -->
-            <form id="contactForm">
-  
+            <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
             <!-- Name input -->
                 <div class="mb-3">
-                    <label class="form-label" for="name">Name</label>
-                    <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                    {{ form.name.label() }}
+                    {{ form.name() }}
                 </div>
   
-            <!-- Email address input -->
+            <!-- Email  input -->
                 <div class="mb-3">
-                    <label class="form-label" for="emailAddress">Email Address</label>
-                    <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required, email" />
+                    {{ form.email.label() }}
+                    {{ form.email() }}
                 </div>
-  
+            <!--Subject of the message-->
+                <div class="mb-3">
+                    {{ form.subject.label() }}
+                    {{ form.subject() }}
+                </div>
             <!-- Message input -->
                 <div class="mb-3">
-                    <label class="form-label" for="message">Message</label>
-                    <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem; resize: none;" data-sb-validations="required"></textarea>
+                    {{ form.message.label() }}
+                    {{ form.message() }}
                 </div>
-  
             <!-- Form submit button -->
                 <div class="d-grid">
-                    <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                    {{ form.submit.label() }}
+                    {{ form.submit() }}
                 </div>
             </form>
         </div>

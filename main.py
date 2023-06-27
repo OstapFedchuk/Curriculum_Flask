@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
-from datetime import timedelta
+from ContactForm import cform
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,password):
@@ -35,7 +35,7 @@ def check_user_exist(username):
 
 #inizio programma   
 app = Flask(__name__)
-app.secret_key = '2006'
+app.secret_key = 'k204$_vs!q.4'
 
 #pagina iniziale del sito
 @app.route('/')
@@ -89,18 +89,23 @@ def login():
     else:
         return render_template('login.html')
 
+#GitHub Status Page
 @app.route('/gitstatus')
 def gitstatus():
     return render_template('gitstatus.html')
 
-@app.route('/contact')
+#Contact Page
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
-    return render_template('contact.html')
+    form = cform()
+    return render_template('contact.html', form=form)
 
+#About Page, with my Curriculum Vitae
 @app.route('/about')
 def about():
     return render_template("about.html")
-           
+
+#LogOut Page      
 @app.route('/logout')
 def logout():
     session.clear()
