@@ -80,9 +80,6 @@ def login():
         password = request.form['password']
         error = False
 
-        if username:
-            session['username'] = username[1]
-
         if check_user(username, password):
             return redirect(url_for('index', username=username))
         else:

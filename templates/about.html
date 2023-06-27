@@ -38,7 +38,7 @@ h1 {
 	position: absolute;
 	width: 20%;
 	height: 80%;
-	top: 10%;
+	top: 8%;
 	right: 15%;
 	padding: 20px;
 	margin: auto;
@@ -75,7 +75,6 @@ h1 {
 #ulheader {
 	width: 100%;
 	position: fixed;
-	border: 2px solid #d6ccc2;
 	list-style-type: none;
 	margin: 0;
 	padding: 1%;
@@ -104,6 +103,7 @@ footer {
 	border: 2px solid #d6ccc2;
 	background-color: #d6ccc2;
 	position: fixed;
+	padding: 0.5%;
 	bottom: 0;
     left: 0;
     right: 0;
@@ -123,6 +123,11 @@ footer {
     margin-right: auto;
 }
 
+#ulfooter li {
+	padding: 15px;
+	display: inline-block;
+}
+
 .iconefoot {
 	width: 25px;
 	height: 25px;
@@ -131,31 +136,36 @@ footer {
 #github:hover {
 	background-color: grey;
 	border-radius: 50%;
+	width: 30px;
+	height: 30px;
 }
 
 #facebook:hover {
 	background-color: #0165E1;
 	border-radius: 50%;
+	width: 30px;
+	height: 30px;
 }
 
 #youtube:hover {
 	background-color: red;
 	border-radius: 50%;
+	width: 30px;
+	height: 30px;
 }
 
 #linkedin:hover {
 	background-color: #0077b5;
 	border-radius: 50%;
+	width: 30px;
+	height: 30px;
 }
 
 #twitter:hover {
     background-color: #1D9BF0;
     border-radius: 50%;
-}
-
-#ulfooter li {
-	padding: 10px;
-	display: inline-block;
+	width: 30px;
+	height: 30px;
 }
     </style>
 	<body>
@@ -219,7 +229,6 @@ footer {
 			<p>Disponibile su richiesta</p>
 			<br>
 		</div>
-		<div></div>
 		<footer>
 			<ul id="ulfooter">
                 <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/github.png" alt="github" class="iconefoot" id="github"></a></li>
@@ -227,7 +236,6 @@ footer {
 				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/youtube.png" alt="youtube" class="iconefoot" id="youtube"></a></li>
                 <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/linkedin.png" alt="linkedin" class="iconefoot" id="linkedin"></a></li>
 				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/twitter.png" alt="twitter" class="iconefoot" id="twitter"></a></li>
-				<li><p style="text-align: center; font-family: Arial, Helvetica, sans-serif; display: flex; justify-content: center;"><b>2023 Copyright©: Ostap Fedchuk</b></p></li>
             </ul>
 		</footer>
 	</body>

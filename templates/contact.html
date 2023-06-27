@@ -18,28 +18,39 @@
                 <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
             </ul>
         </header>
-        <div id="divform">
-            <form>
-                <label>Nome(*richiesto)</label> <br>
-                <input type="text" id="nome" class="inp" placeholder="Tuo Nome...">
-                <br><br>
-                <label>Email(*richiesto) </label> <br>
-                <input type="email" id="email" class="inp" placeholder="Tua Email...">
-                <br><br>
-                <label>Oggetto</label> <br>
-                <input type="text" id="oggetto" class="inp" placeholder="Oggetto...">
-                <br><br>
-                <textarea rows="25" cols="21" id="tarea" placeholder="Messaggio da inserire..."></textarea> 
-                <br><br>
-                <input type="submit" id="tasto" value="Invia">
+        <!-- Wrapper container -->
+        <div class="container py-4">
+
+            <!-- Bootstrap 5 starter form -->
+            <form id="contactForm">
+  
+            <!-- Name input -->
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                </div>
+  
+            <!-- Email address input -->
+                <div class="mb-3">
+                    <label class="form-label" for="emailAddress">Email Address</label>
+                    <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required, email" />
+                </div>
+  
+            <!-- Message input -->
+                <div class="mb-3">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem; resize: none;" data-sb-validations="required"></textarea>
+                </div>
+  
+            <!-- Form submit button -->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                </div>
             </form>
-            <footer>
-                <ul id="ulfooter">
-                    <li><img src="icons/phone.png" alt="telefono" class="iconefooter"><nobr> +39 371 441 7383</nobr><br><br></li> 
-                    <li><img src="icons/email.png" alt="email" class="iconefooter"><nobr> ostapit12345@gmail.com</nobr></li>
-                </ul>
-                <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
-            </footer>
+        </div>
+        <footer>
+            <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
+        </footer>
         </div>
     </body>
 </html>
