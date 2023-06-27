@@ -92,6 +92,10 @@ def login():
     else:
         return render_template('login.html')
 
+@app.route('/gitstatus')
+def gitstatus():
+    return render_template('gitstatus.html')
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
@@ -105,16 +109,6 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@app.route("/tabella")
-def tabella():
-    conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row
-
-    cur = conn.cursor()
-    cur.execute("SELECT * from users")
-
-    rows = cur.fetchall()
-    return render_template("tabella.html", rows=rows)
-
+#esecuzione dell'applicazione
 if __name__ == "__main__":
     app.run(debug=True)

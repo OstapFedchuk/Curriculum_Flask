@@ -7,7 +7,7 @@ body {
 }
 
 #ulheader {
-    border: 2px solid black;
+    border: 2px solid #d6ccc2;
     width: 100%;
 	list-style-type: none;
 	margin-top: 0;
@@ -17,7 +17,7 @@ body {
 	text-align: center;
     top: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     justify-content: center;
 }
 
@@ -107,13 +107,14 @@ input[type=text], input[type=email] {
 
  footer {
     width: 100%;
-	border: 2px solid black;
+	border: 2px solid #d6ccc2;
 	background-color: #d6ccc2;
-    position: absolute;
     justify-content: center;
-    margin-top: 6%;
-    margin-bottom: 0;
+    position: fixed;
+	bottom: 0;
     left: 0;
+    right: 0;
+	height: 10%;
 }
 
 #ulfooter {

@@ -38,7 +38,7 @@ h1 {
 	position: absolute;
 	width: 20%;
 	height: 80%;
-	top: 15%;
+	top: 10%;
 	right: 15%;
 	padding: 20px;
 	margin: auto;
@@ -103,12 +103,17 @@ h1 {
 footer {
 	border: 2px solid #d6ccc2;
 	background-color: #d6ccc2;
+	position: fixed;
+	bottom: 0;
+    left: 0;
+    right: 0;
+	height: 5%;
+
 }
 
 #ulfooter {
 	list-style-type: none;
 	margin: 0;
-	padding: 1%;
 	overflow: hidden;
 	position: relative;
 	width: auto; 
@@ -119,12 +124,37 @@ footer {
 }
 
 .iconefoot {
-	width: 50px;
-	height: 50px;
+	width: 25px;
+	height: 25px;
+}
+
+#github:hover {
+	background-color: grey;
+	border-radius: 50%;
+}
+
+#facebook:hover {
+	background-color: #0165E1;
+	border-radius: 50%;
+}
+
+#youtube:hover {
+	background-color: red;
+	border-radius: 50%;
+}
+
+#linkedin:hover {
+	background-color: #0077b5;
+	border-radius: 50%;
+}
+
+#twitter:hover {
+    background-color: #1D9BF0;
+    border-radius: 50%;
 }
 
 #ulfooter li {
-	padding: 20px;
+	padding: 10px;
 	display: inline-block;
 }
     </style>
@@ -132,10 +162,9 @@ footer {
 		<header>
 			<ul id="ulheader">
 				<li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
-                <li class="liheader"><a href="{{ url_for('login') }}" class="oggheader">Login</a></li>
-                <li class="liheader"><a href="{{ url_for('register') }}" class="oggheader">Sign Up</a></li>
+				<li class="liheader"><a href="{{ url_for('gitstatus') }}" class="oggheader">GitHub Status</a></li>
 				<li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
-                <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+				<li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
 			</ul>
 		</header>
 <!--Parte Sinistra della pagina-->
@@ -192,15 +221,14 @@ footer {
 		</div>
 		<div></div>
 		<footer>
-			<h2  style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Seguimi su</h2>
 			<ul id="ulfooter">
-                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/github.png" alt="github" class="iconefoot"></a></li>
-                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/facebook.png" alt="facebook" class="iconefoot"></a></li>
-				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/youtube.png" alt="youtube" class="iconefoot"></a></li>
-                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/linkedin.png" alt="linkedin" class="iconefoot"></a></li>
-				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/twitter.png" alt="twitter" class="iconefoot"></a></li>
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/github.png" alt="github" class="iconefoot" id="github"></a></li>
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/facebook.png" alt="facebook" class="iconefoot" id="facebook"></a></li>
+				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/youtube.png" alt="youtube" class="iconefoot" id="youtube"></a></li>
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/linkedin.png" alt="linkedin" class="iconefoot" id="linkedin"></a></li>
+				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/twitter.png" alt="twitter" class="iconefoot" id="twitter"></a></li>
+				<li><p style="text-align: center; font-family: Arial, Helvetica, sans-serif; display: flex; justify-content: center;"><b>2023 Copyright©: Ostap Fedchuk</b></p></li>
             </ul>
-			<p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
 		</footer>
 	</body>
 </html>
