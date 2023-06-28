@@ -13,11 +13,50 @@
         <header>
             <ul id="ulheader">
                 <li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
-                <li class="liheader"><a href="{{ url_for('gitstatus') }}" class="oggheader">GitHub Status</a></li>
-                <li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
                 <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+                <li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
+                <li class="liheader">{% block content %}
+                    <img src="static/images/userfoto.png" alt="userfoto"  width="50px" height="50px" /><b> {{  global_username }}</b>
+                {% endblock %}</li>
             </ul>
         </header>
+        <!-- Wrapper container -->
+        <div class="container py-4">
+            <div class="contact">
+                <h2>Contacts</h2>
+                <h3>Contact me by completing the form</h3>
+                <h2></h2>
+            </div>
+            <!-- Bootstrap 5 starter form -->
+            <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
+            <!-- Name input -->
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                </div>
+  
+            <!-- Email address input -->
+                <div class="mb-3">
+                    <label class="form-label" for="emailAddress">Email Address</label>
+                    <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required, email" />
+                </div>
+            <!--Subject of the message-->
+                <div class="mb-3">
+                    <label class="form-label" for="subject">Subject</label>
+                    <input class="form-control" id="subject" type="text" placeholder="Subject" data-sb-validations="required" />
+                </div>
+            <!-- Message input -->
+                <div class="mb-3">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem; resize: none;" data-sb-validations="required"></textarea>
+                </div>
+  
+            <!-- Form submit button -->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
         <footer>
             <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
         </footer>

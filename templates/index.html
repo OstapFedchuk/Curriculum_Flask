@@ -10,19 +10,24 @@
     <title>Home</title>
 </head>
 <body>
-    <header>
-        <ul id="ulheader">
-            <li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
-            <li class="liheader"><a href="{{ url_for('gitstatus') }}" class="oggheader">GitHub Status</a></li>
-            <li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
-            <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+    <header class="main-header">
+        <ul class="main-nav">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li class="dropdown">
+            {% block content %} 
+                <img src="static/images/userfoto.png" alt="userfoto"  width="50px" height="50px" /><nobr style="color: white"><b>{{  global_username }}</b></nobr>
+            {% endblock %}
+            <ul class="drop-nav">
+              <li><a href="#">Info</a></li>
+              <li><a href="#">Login</a></li>
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Github Status</a></li>       
+            </ul>
         </ul>
-    </header>
-    <div id="user">
-        {% block content %}
-        <img src="static/images/userfoto.png" alt="userfoto"  width="50px" height="50px" /><b> Ciao, {{  global_username }}</b>
-        {% endblock %}
-    </div>
+      </header>
+    
     <div id="textdiv">
         <h1 class="animated-text">WELCOME</h1>
         <h1 class="animated-text">TO</h1>
