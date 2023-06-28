@@ -1,13 +1,11 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 
-global_username = ""
-
 #funzione che memorizza il username e password nel database
-def register_user_to_db(username, password):
+def register_user_to_db(username,email,fullname,age,password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+    cur.execute("INSERT INTO users (username,email,fullname,age,password) VALUES (?, ?, ?, ?, ?)", (username,email,fullname,age,password))
     conn.commit()
     conn.close()
 
@@ -36,12 +34,16 @@ def check_user_exist(username):
 
 #inizio programma   
 app = Flask(__name__)
-app.secret_key = '2006'
 
 #pagina iniziale del sito
 @app.route('/')
 def index():
-    return render_template("index.html")
+    if request.method == "GET":
+        if request.args.get('username'):
+            username = request.args.get('username')
+        else:
+            username = "Guest"
+    return render_template("index.html", global_username=username)
     
 
 #REGISTRAZIONE
@@ -51,6 +53,9 @@ def register():
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
+        fullname = request.form['fullname']
+        age = request.form['age']
         password = request.form['password']
 
         if check_user_exist(username,):
@@ -58,7 +63,7 @@ def register():
             return render_template("register.html", error=error)
             
         else:
-            register_user_to_db(username,password)
+            register_user_to_db(username,email,fullname,age,password)
             return redirect(url_for('index'))
     
     else:
@@ -74,8 +79,7 @@ def login():
         error = False
 
         if check_user(username, password):
-            global_username = username
-            return redirect(url_for('index'))
+            return redirect(url_for('index', username=username))
         else:
             error = True
             return render_template("login.html", error=error)
@@ -83,22 +87,27 @@ def login():
     else:
         return render_template('login.html')
 
-        
+#GitHub Status Page
+@app.route('/gitstatus')
+def gitstatus():
+    return render_template('gitstatus.html')
+
+#Contact Page
+@app.route('/contact', methods=["GET", "POST"])
+def contact():
+    return render_template('contact.html')
+
+#About Page, with my Curriculum Vitae
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+#LogOut Page      
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@app.route("/tabella")
-def tabella():
-    conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row
-
-    cur = conn.cursor()
-    cur.execute("SELECT * from users")
-
-    rows = cur.fetchall()
-    return render_template("tabella.html", rows=rows)
-
+#esecuzione dell'applicazione
 if __name__ == "__main__":
     app.run(debug=True)

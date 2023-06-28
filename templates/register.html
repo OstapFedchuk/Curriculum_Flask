@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="static/registerstyle.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
@@ -13,6 +14,37 @@
         background-color: beige;
       }
 
+      #ulheader {
+	      border: 2px solid #d6ccc2;
+        width: 100%;
+	      list-style-type: none;
+	      margin-top: 0;
+	      padding: 1%;
+	      overflow: hidden;
+	      background-color: #d6ccc2;
+	      text-align: center;
+        top: 0;
+        left: 0;
+        position: fixed;
+        justify-content: center;
+      }
+
+      .liheader {
+	      display: inline;
+	      padding: 10%;
+	      font-weight: bold;
+	      font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .liheader:hover {
+	      background-color: #edede9;
+      }
+
+      .oggheader {
+	      text-decoration: none;
+	      color: black;
+      }
+
       label {
         font-family: Arial, Helvetica, sans-serif;
         font-weight: bold;
@@ -20,6 +52,8 @@
 
       .container { 
         position: relative; 
+        margin-top: 5%; /* Adjust the top margin */
+        margin-bottom: 5%; 
       }
 
       .center {
@@ -32,13 +66,32 @@
       }
 
       h1 {
-        margin: 20%;
+        margin: 10%;
         text-align: center;
         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      footer {
+        border: 2px solid #d6ccc2;
+        background-color: #d6ccc2;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        padding-top: 1%;
       }
     </style>
 </head>
 <body>
+  <header>
+    <ul id="ulheader">
+      <li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
+      <li class="liheader"><a href="{{ url_for('gitstatus') }}" class="oggheader">GitHub Status</a></li>
+      <li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
+      <li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+    </ul>
+  </header>
   <h1><b>SIGN UP</b></h1>
   <div class="container">
     <div class ="col-xs-2" id="center">
@@ -47,32 +100,35 @@
               <label for="username" class="form-label">Username</label>
               <input type="text" class="form-control" id="Username" name="username"  placeholder="Username">
             </div>
-            <div class="mb-3">
-              <label for="Email" class="form-label">Email</label>
-              <input type="text" class="form-control" id="Email" name="email" placeholder="name@example.com">
-            </div>
-            <div class="mb-3">
-              <label for="nomecompleto" class="form-label">Name</label>
-              <input type="text" class="form-control" id="nomecompleto" name="Name" placeholder="Josh Barston">
-            </div>
-            <div class="mb-3">
-              <label for="date" class="form-label">Age</label>
-              <input type="date" class="form-control" id="date" name="date">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-            </div>
             {% block content %}
               {% if error %}
               <p style="color: red; font-weight: bold;">Utente già in uso</p>
               {% endif %}
             {% endblock %}
+            <div class="mb-3">
+              <label for="Email" class="form-label">Email</label>
+              <input type="text" class="form-control" id="Email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="fullname" class="form-label">FUllname</label>
+              <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Surname Name">
+            </div>
+            <div class="mb-3">
+              <label for="age" class="form-label">Age</label>
+              <input type="text" class="form-control" id="age" name="age" placeholder="Ex. 25">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password">
+            </div>
             <button type="submit" class="btn btn-primary">Sign Up</button>
           </form>
           <br>
           <!--btn btn-primary btn-sm componente di Bootstrap che crea un bottone (sm = small, lg = large)-->
-          <b>Hai già un account? </b><a href="/login" class="btn btn-primary btn-sm">Login</a>
+          <b>Hai già un account? </b><a href="/login" class="btn btn-primary">Login</a>
     </div>
+    <footer>
+      <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
+    </footer>
 </body>
 </html>
