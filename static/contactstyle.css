@@ -37,23 +37,9 @@ body {
 	color: black;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .contact {
-    text-align: center;
-    position: absolute;
-    top: 10%;
-    margin: auto;
-  }
-  #contactForm {
-    font-weight: bold;
-    max-width: 500px;
-    width: 100%;
-  }
+textarea {
+    resize: none;
+}
 
 footer {
     width: 100%;
@@ -63,5 +49,6 @@ footer {
     justify-content: center;
     margin-top: 6%;
     bottom: 0;
+    left: 0;
     padding-top: 1%;
 }

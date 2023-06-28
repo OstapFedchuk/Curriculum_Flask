@@ -1,6 +1,5 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
-from ContactForm import cform
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,password):
@@ -35,7 +34,6 @@ def check_user_exist(username):
 
 #inizio programma   
 app = Flask(__name__)
-app.secret_key = 'k204$_vs!q.4'
 
 #pagina iniziale del sito
 @app.route('/')
@@ -97,8 +95,7 @@ def gitstatus():
 #Contact Page
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
-    form = cform()
-    return render_template('contact.html', form=form)
+    return render_template('contact.html')
 
 #About Page, with my Curriculum Vitae
 @app.route('/about')
