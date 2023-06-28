@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>About</title>
+		<link rel="stylesheet" href="aboutstyle.css">
+	</head>
+    <style>
+body {
+	background: #edede9;
+	margin: 0;
+	padding: 0;
+    display: flex;
+}
+
+hr.linea {
+	border: 2px solid #d6ccc2;
+	border-radius: 5px;
+	width: 40%;
+	position: absolute;
+}
+
+p {
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#destra {
+	background-color: #d6ccc2;
+	border: 2px solid black;
+	border-radius: 200px;
+	position: absolute;
+	width: 20%;
+	height: 80%;
+	top: 8%;
+	right: 15%;
+	padding: 20px;
+	margin: auto;
+	z-index: -1;  /*Serve per mettere un qualsiasi oggetto sotto un altro*/
+}
+
+#sinistra {
+	padding: 5%;
+}
+
+#foto {
+	width: 200px;
+	height: 200px;
+	border: 2px solid black;
+	border-radius: 50%; 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+}
+
+#ulicone {
+	list-style-type: none;
+	margin: 0;
+	padding: 1%;
+	overflow: hidden;
+}
+
+.icone {
+	width: 25px;
+	height: 25px;
+}
+
+#ulheader {
+    width: 100%;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+	overflow: hidden;
+	background-color: #d6ccc2;
+	text-align: center;
+    top: 0;
+    left: 0;
+    position: fixed;
+    justify-content: center;
+}
+
+.liheader {
+	display: inline;
+	font-weight: bold;
+    padding: 10%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.liheader:hover {
+	background-color: #edede9;
+}
+
+.oggheader {
+	text-decoration: none;
+	color: black;
+}
+
+footer {
+	border: 2px solid #d6ccc2;
+	background-color: #d6ccc2;
+	position: fixed;
+	padding: 0.5%;
+	bottom: 0;
+    left: 0;
+    right: 0;
+	height: 7%;
+}
+
+#ulfooter {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	width: auto; 
+	display: table;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#ulfooter li {
+	padding: 15px;
+	display: inline-block;
+}
+
+.iconefoot {
+	width: 25px;
+	height: 25px;
+	transition: transform .2s; 
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#github:hover {
+	background-color: white;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+	border-radius: 50%;
+}
+
+#facebook:hover {
+	background-color: #0165E1;
+	border-radius: 50%;
+	-ms-transform: scale(1.5);
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
+
+#youtube:hover {
+	background-color: red;
+	border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); ;
+}
+
+#linkedin:hover {
+	background-color: #0077b5;
+	border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
+
+#twitter:hover {
+    background-color: #1D9BF0;
+    border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
+    </style>
+	<body>
+		<header>
+			<ul id="ulheader">
+				<li class="liheader"><a href="{{ url_for('index') }}" class="oggheader">Home</a></li>
+				<li class="liheader"><a href="{{ url_for('about') }}" class="oggheader">About</a></li>
+				<li class="liheader"><a href="{{ url_for('contact') }}" class="oggheader">Contact Me</a></li>
+				<li class="liheader">{% block content %}
+					<img src="static/images/userfoto.png" alt="userfoto"  width="50px" height="50px" /><b> {{  global_username }}</b>
+				{% endblock %}</li>
+			</ul>
+		</header>
+<!--Parte Sinistra della pagina-->
+		<div id="sinistra">
+		<h1>OSTAP<br>FEDCHUK</h1>
+		<h2>ITS STUDENTE</h2>
+		<br><hr class="linea"><br>
+			<div>
+				<h2>ISTRUZIONE E FORMAZIONE</h2>
+				<p><b>Istituto Tecnico Leonardo Da Vinci Borgomanero</b></p>
+				<p>Diploma in Informatica 2025/2026</p>
+				<h2>ESPERIENZE PROFESSIONALI</h2>
+				<p><b>Studi ITS Borgomanero (2020-2026)</b></p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do <br>
+				eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <br>
+				enim ad minim veniam, quis nostrud exercitation ullamco laboris <br>
+				nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor <br>
+				in reprehenderit in voluptate velit esse cillum dolore eu fugiat <br>
+				nulla pariatur. Excepteur sint occaecat cupidatat non proident, <br>
+				sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p><b>Stage EID S.r.l Borgomanero (2023)</b></p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do <br>
+				eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <br>
+				enim ad minim veniam, quis nostrud exercitation ullamco laboris <br>
+				nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor <br>
+				in reprehenderit in voluptate velit esse cillum dolore eu fugiat <br>
+				nulla pariatur. Excepteur sint occaecat cupidatat non proident, <br>
+				sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<h2>LINGUE</h2>
+				<p>Italiano-C1 | Ucraino-Madrelingua | Inglese-B1</p>
+			</div>
+		</div>
+<!--Parte Destra della pagina-->
+		<div id="destra">
+			<img src="static/images/fotome (2).jpg" alt="foto" id="foto">
+			<h2>CHI SONO</h2>
+			<p>Innovativa, creativa e professionale.
+				Specializzata in Digital Marketing e
+				SM Marketing. Sono una ragazza
+				allegra, ambiziosa e dedicata. Amo il
+				mio lavoro e raggiungere gli
+				obiettivi in gruppo.</p>
+			<br>
+			<h2>COMPETENZE</h2>
+			<ul>
+				<li>Front-End Developer</li>
+				<li>Programmazione in C</li>
+				<li>Programmazione in Assembly8086</li>
+			</ul>
+			<br>
+			<h2>REFERENZE</h2>
+			<p>Disponibile su richiesta</p>
+			<br>
+		</div>
+		<footer>
+			<ul id="ulfooter">
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/github.png" alt="github" class="iconefoot" id="github"></a></li>
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/facebook.png" alt="facebook" class="iconefoot" id="facebook"></a></li>
+				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/youtube.png" alt="youtube" class="iconefoot" id="youtube"></a></li>
+                <li><a href="https://github.com/OstapFedchuk"><img src="static/icons/linkedin.png" alt="linkedin" class="iconefoot" id="linkedin"></a></li>
+				<li><a href="https://github.com/OstapFedchuk"><img src="static/icons/twitter.png" alt="twitter" class="iconefoot" id="twitter"></a></li>
+            </ul>
+		</footer>
+	</body>
+</html>
