@@ -26,8 +26,13 @@ ul {
     position: absolute;
     width: 100%;
     padding: 0;
+    font-weight: bold;
 }
    
+.main-nav  a:hover {
+    color: black;
+}
+
 .main-nav > li:hover {
     background-color: lightgrey;
 }
@@ -46,17 +51,27 @@ ul {
 }
 
 .dropdown {
+    position: relative;
     float: right;
-    padding-right: 10%;
+    padding-right: 5%;
     padding-left: 1%;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.dropdown img {
+    position: relative;
+    margin-right: 10px;
 }
   
 .dropdown:hover {
     background-color: lightgrey;
     height: 44px;
 }
-  
+
 .drop-nav {
+    cursor: pointer;
+    right: 0;
     margin-top: 1%;
     position: absolute;
     padding-left: 0;
@@ -69,14 +84,20 @@ ul {
     color: white;
 }
 
+.drop-nav a:hover {
+    color: black;
+}
+
 .drop-nav li:hover {
     background-color: lightgrey;
 }
   
 .drop-nav li {
     border-bottom: 1px solid rgba(255,255,255,.2);
+    text-align: center;
+    font-weight: bold;
 }
-  
+
 .dropdown:hover > .drop-nav {
     display: block;
 }

@@ -1,0 +1,249 @@
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #ecf0f1;
+    color: #fff;
+}
+  
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; 
+}
+
+.main-nav,
+.drop-nav {
+    background: #2c3e50;
+}
+
+.main-nav {
+    float: right;
+    position: fixed;
+    width: 100%;
+    padding: 0;
+    font-weight: bold;
+}
+   
+.main-nav  a:hover {
+    color: black;
+}
+
+.main-nav > li:hover {
+    background-color: lightgrey;
+}
+
+.main-nav > li {
+    float: left;
+    height: 100%;
+}
+    
+.main-nav a {
+    color: #fff;
+    display: block;
+    padding: 10px 30px;
+    text-decoration: none;
+    height: 100%;
+}
+
+.dropdown {
+    position: relative;
+    float: right;
+    padding-right: 5%;
+    padding-left: 1%;
+    padding-top: 2px;
+    font-weight: bold;
+}
+
+.dropdown img {
+    position: relative;
+    margin-right: 10px;
+}
+  
+.dropdown:hover {
+    background-color: lightgrey;
+    height: 44px;
+}
+
+.drop-nav {
+    cursor: pointer;
+    right: 0;
+    margin-top: 1%;
+    position: absolute;
+    padding-left: 0;
+    display: none;
+    width: 200px;
+}
+
+.drop-nav a {
+    text-decoration: none;
+    color: white;
+}
+
+.drop-nav a:hover {
+    color: black;
+}
+
+.drop-nav li:hover {
+    background-color: lightgrey;
+}
+  
+.drop-nav li {
+    border-bottom: 1px solid rgba(255,255,255,.2);
+    text-align: center;
+    font-weight: bold;
+}
+
+.dropdown:hover > .drop-nav {
+    display: block;
+}
+
+hr.linea {
+	border: 2px solid #2c3e50;
+	border-radius: 5px;
+	width: 40%;
+	position: absolute;
+}
+
+p {
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#destra {
+	background-color: #2c3e50;
+    color: white;
+	border: 5px solid #495057;
+	border-radius: 200px;
+	position: absolute;
+	width: 20%;
+	height: 80%;
+	top: 10%;
+	right: 15%;
+	padding: 20px;
+	margin: auto;
+	z-index: -1;  /*Serve per mettere un qualsiasi oggetto sotto un altro*/
+}
+
+#destra ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#p-ref {
+    padding-left: 1%;
+}
+
+#sinistra {
+	padding: 5%;
+}
+
+#foto {
+	width: 200px;
+	height: 200px;
+	border: 2px solid #495057;
+	border-radius: 50%; 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5%;
+}
+
+#ulicone {
+	list-style-type: none;
+	margin: 0;
+	padding: 1%;
+	overflow: hidden;
+}
+
+.icone {
+	width: 25px;
+	height: 25px;
+}
+
+footer {
+	border: 2px solid #2c3e50;
+	background-color: #2c3e50;
+	position: fixed;
+	padding: 0.5%;
+	bottom: 0;
+    left: 0;
+    right: 0;
+	height: 7%;
+}
+
+#ulfooter {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	width: auto; 
+	display: table;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#ulfooter li {
+	padding: 15px;
+	display: inline-block;
+}
+
+.iconefoot {
+	width: 25px;
+	height: 25px;
+	transition: transform .2s; 
+}
+
+
+#github:hover {
+	background-color: white;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+	border-radius: 50%;
+}
+
+#facebook:hover {
+	background-color: #0165E1;
+	border-radius: 50%;
+	-ms-transform: scale(1.5);
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
+
+#youtube:hover {
+	background-color: red;
+	border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); ;
+}
+
+#linkedin:hover {
+	background-color: #0077b5;
+	border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
+
+#twitter:hover {
+    background-color: #1D9BF0;
+    border-radius: 50%;
+	-ms-transform: scale(1.5); 
+  	-webkit-transform: scale(1.5); 
+  	transform: scale(1.5); 
+}
