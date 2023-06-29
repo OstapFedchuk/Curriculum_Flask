@@ -60,7 +60,6 @@ def register():
         gender = request.form['gender']
         password = request.form['password']
         password_salted = bcrypt.hashpw(password, bcrypt.gensalt())
-        password_bytes = bcrypt.hashpw(password_salted, password)
 
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
