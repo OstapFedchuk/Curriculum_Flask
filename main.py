@@ -2,10 +2,10 @@ import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 
 #funzione che memorizza il username e password nel database
-def register_user_to_db(username,email,fullname,age,password):
+def register_user_to_db(username,email,fullname,age,gender,password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username,email,fullname,age,password) VALUES (?, ?, ?, ?, ?)", (username,email,fullname,age,password))
+    cur.execute("INSERT INTO users (username,email,fullname,age,gender,password) VALUES (?, ?, ?, ?, ?, ?)", (username,email,fullname,age,gender,password))
     conn.commit()
     conn.close()
 
@@ -56,6 +56,7 @@ def register():
         email = request.form['email']
         fullname = request.form['fullname']
         age = request.form['age']
+        gender = request.form = ['gender']
         password = request.form['password']
 
         if check_user_exist(username,):
@@ -63,8 +64,8 @@ def register():
             return render_template("register.html", error=error)
             
         else:
-            register_user_to_db(username,email,fullname,age,password)
-            return redirect(url_for('index'))
+            register_user_to_db(username,email,fullname,age,gender,password)
+            return redirect(url_for('login'))
     
     else:
         return render_template('register.html')
@@ -85,7 +86,7 @@ def login():
             return render_template("login.html", error=error)
     
     else:
-        return render_template('login.html')
+        return render_template('index.html')
 
 #GitHub Status Page
 @app.route('/gitstatus')
