@@ -51,7 +51,7 @@ ul {
 }
 
 .dropdown {
-    position: relative;
+    position: fixed;
     float: right;
     padding-right: 5%;
     padding-left: 1%;
@@ -60,7 +60,7 @@ ul {
 }
 
 .dropdown img {
-    position: relative;
+    position: fixed;
     margin-right: 10px;
 }
   
@@ -72,7 +72,7 @@ ul {
 .drop-nav {
     cursor: pointer;
     right: 0;
-    margin-top: 1%;
+    margin-top: 45%;
     position: absolute;
     padding-left: 0;
     display: none;

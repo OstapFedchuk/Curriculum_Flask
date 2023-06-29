@@ -95,7 +95,12 @@ def gitstatus():
 #Contact Page
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
-    return render_template('contact.html')
+    if request.method == "GET":
+        if request.args.get('username'):
+            username = request.args.get('username')
+        else:
+            username = "Guest"
+    return render_template("contact.html", global_username=username)
 
 #About Page, with my Curriculum Vitae
 @app.route('/about')
