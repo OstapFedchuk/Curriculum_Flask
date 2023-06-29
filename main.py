@@ -1,5 +1,6 @@
 import sqlite3
-from flask import Flask, redirect, url_for, render_template, request, session, bcrypt
+from flask import Flask, redirect, url_for, render_template, request, session
+import bcrypt
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,gender,password):
@@ -58,36 +59,60 @@ def register():
         age = request.form['age']
         gender = request.form['gender']
         password = request.form['password']
-        encrypted_psw  = bcrypt.hashpw(password, bcrypt.gensalt())
+        password_salted = bcrypt.hashpw(password, bcrypt.gensalt())
+        password_bytes = bcrypt.hashpw(password_salted, password)
 
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+
+        #controla se nel database è gia presente un'utente loggato con quel username
         if check_user_exist(username,):
             error = True
             return render_template("register.html", error=error)
-            
+ 
         else:
-            register_user_to_db(username,email,fullname,age,gender,encrypted_psw)
+            register_user_to_db(username,email,fullname,age,gender,password)
             return redirect(url_for('login'))
     
     else:
         return render_template('register.html')
 
 #LOGIN   
-@app.route('/login', methods=["POST", "GET"])
+@app.route('/login', methods=["GET", "POST"])
 def login():
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
-        error = False
+        user_password = request.form['password']
+        user_password_bytes = bytes(user_password, 'utf-8')
+        error = False # errore se username o password sono errati
+        error2 = False # errore se il username non è registrato
 
-        if check_user(username, password):
-            return redirect(url_for('index', username=username))
-        else:
-            error = True
-            return render_template("login.html", error=error)
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+#Otteniamo User tramite username
+        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
+        if cur is not None:
+        #otteniamo la password hashed
+            data = cur.fetchone()
+            password = data[5]
+    #compariamo la password  con la password hashed 
+            if bcrypt.checkpw(user_password.encode('utf-8'), password.encode('utf-8')):
+                app.logger['logged_in'] = True
+                session['username'] = username
+                
+                cur.close()
+                return redirect(url_for('index', global_username=username))
+            
+            else:
+                error = True
+                return render_template('login.html', error=error)
     
-    else:
-        return render_template('index.html')
+        else:
+            error2 = True
+            return render_template('login.html', error2=error2)
+    
+    return render_template('login.html')
 
 #GitHub Status Page
 @app.route('/gitstatus')
