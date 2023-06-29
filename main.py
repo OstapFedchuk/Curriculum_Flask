@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, bcrypt
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,gender,password):
@@ -56,15 +56,16 @@ def register():
         email = request.form['email']
         fullname = request.form['fullname']
         age = request.form['age']
-        gender = request.form = ['gender']
+        gender = request.form['gender']
         password = request.form['password']
+        encrypted_psw  = bcrypt.hashpw(password, bcrypt.gensalt())
 
         if check_user_exist(username,):
             error = True
             return render_template("register.html", error=error)
             
         else:
-            register_user_to_db(username,email,fullname,age,gender,password)
+            register_user_to_db(username,email,fullname,age,gender,encrypted_psw)
             return redirect(url_for('login'))
     
     else:

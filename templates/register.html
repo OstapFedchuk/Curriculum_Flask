@@ -34,30 +34,36 @@
     <!-- email input -->
         <div class="mb-3">
             <label class="form-label" for="email">Email</label>
-            <input class="form-control" id="email" type="email" placeholder="example@domain.com" name="email"/>
+            <input class="form-control" id="email" type="text" placeholder="example@domain.com" name="email"/>
         </div>
     <!-- fullname input -->
         <div class="mb-3">
           <label class="form-label" for="fullname">Fullname</label>
-          <input class="form-control" id="fullname" type="fullname" placeholder="Surname Name" name="fullname"/>
+          <input class="form-control" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
         </div>
     <!-- age input -->
         <div class="mb-3">
           <label class="form-label" for="age">Age</label>
-          <input class="form-control" id="age" type="age" placeholder="Ex. 25" name="age"/>
+          <input class="form-control" id="age" type="text" placeholder="Ex. 25" name="age"/>
       </div>
     <!--Gender input-->
     <label class="for-label" for="gender">Gender</label>
-      <select class="form-select" aria-label="Default select example" name="gender">
-        <option selected>Don't specify</option>
-        <option value="1">Male</option>
-        <option value="2">Female</option>
+      <select class="form-select" aria-label="Default select example" name="gender" type="text">
+        <option selected>Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Don't specify">Don't specify</option>
       </select>
       <br>
-    <!-- email input -->
+    <!-- Password input -->
       <div class="mb-3">
         <label class="form-label" for="password">Password</label>
         <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
+      </div>
+    <!-- Confirm Password input(NOT INSIDE THE DATABASE) -->
+      <div class="mb-3">
+        <label class="form-label" for="ConfirmPassword"> Confirm Password</label>
+        <input class="form-control" id="password" type="password" placeholder=" Confirm password" name="ConfirmPassword"/>
       </div>
       <br>
         <!--Log In-->
