@@ -22,7 +22,7 @@ def check_user(username,password):
     else:
         return False
     
-def hash_password(password):
+def hash_function(password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     cur.execute("SELECT password FROM users WHERE password = ?", (password,))
@@ -98,14 +98,16 @@ def login():
         username = request.form['username']
         UserPassword = request.form['UserPassword']
         
-        password = request.form['password']
-        password = password.encode('utf-8')
-        hashed_pw = bcrypt.hashpw(hashed_pw, bcrypt.gensalt())
-        hashed_pw = password
+        if check_user_exist(username):
+            error = True
+            return redirect(url_for('login', error=error))
+        
+        if bcrypt.checkpw(UserPassword, hash_function(UserPassword)):
+            return redirect(url_for('index'))
+        else:
+            error_pw = True
+            return render_template('login.html', error_pw=error_pw)
 
-        UserPassword = UserPassword.encode('utf-8')
-        print(bcrypt.checkpw(UserPassword, hashed_pw))
-         
     return render_template('login.html')
 
 #GitHub Status Page

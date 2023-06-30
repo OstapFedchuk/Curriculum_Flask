@@ -28,17 +28,19 @@
         </div>
         {% block content %}
           {% if error %}
-            <p style="color: red; font-weight: bold;">Username o Password Errati</p>
+            <p style="color: red; font-weight: bold;">Username errato</p>
           {% endif %}
-          {% if error2 %}
-            <p style="color: red; font-weight: bold;">Username Inesistente</p>
-          {% endif %}
-        {% endblock %}
+          
+        
     <!-- Password input -->
         <div class="mb-3">
             <label class="form-label" for="UserPassword">Password</label>
             <input class="form-control" id="password" type="password" placeholder="password" name="UserPassword"/>
         </div>
+          {% if error_pw %}
+            <p style="color: red; font-weight: bold;">Password Errata</p>
+          {% endif %}
+        {% endblock %}
         <!-- Remember Me-->
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="ChBox">
