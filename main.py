@@ -39,11 +39,10 @@ app = Flask(__name__)
 #pagina iniziale del sito
 @app.route('/')
 def index():
-    if request.method == "GET":
-        if request.args.get('username'):
-            username = request.args.get('username')
-        else:
-            username = "Guest"
+    if 'username' in session:
+        return render_template('index.html', global_username=session['username'])
+    else:
+        username = "Guest"
     return render_template("index.html", global_username=username)
     
 
@@ -83,7 +82,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         UserPassword = request.form['UserPassword']
-        password = request.form['Password']
+        password = request.form['password']
         
         error = False # errore se username o password sono errati
         error_pw = False # errore se password non corrispondono
