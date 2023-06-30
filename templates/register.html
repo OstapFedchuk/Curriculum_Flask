@@ -13,7 +13,8 @@
 </head>
 <body>
   <header>
-    <a href="{{ url_for('index') }}">< BACK</a>
+    <a class="home-header" href="{{ url_for('index') }}">< HOME</a>
+    <a class="github-header" href="{{ url_for('gitstatus') }}">GITHUB STATUS ></a>
   </header>
   <div class="container py-4">
     <div class="contact">
@@ -60,20 +61,10 @@
         <label class="form-label" for="password">Password</label>
         <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
       </div>
-      {% block content %}
-        {% if errorPw %}
-        <p style="color: red; font-weight: bold;">Password non corrispondono</p>
-        {% endif %}
-      {% endblock %}
-    <!-- Confirm Password input(NOT INSIDE THE DATABASE) -->
-      <div class="mb-3">
-        <label class="form-label" for="ConfirmPassword"> Confirm Password</label>
-        <input class="form-control" id="password" type="password" placeholder=" Confirm password" name="ConfirmPassword"/>
-      </div>
       <br>
         <!--Log In-->
         <div class="d-grid">
-            <button class="btn btn-primary btn-lg" type="submit">Log In</button>
+            <button class="btn btn-primary btn-lg" type="submit">Sign Up</button>
         </div>
     </form>
     </div>

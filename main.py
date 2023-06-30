@@ -51,25 +51,19 @@ def index():
 @app.route('/register', methods=["POST", "GET"])
 def register():
     error = False
-    errorPw = False
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
-        conn = sqlite3.connect('database.db')
-        cur = conn.cursor()
-
         username = request.form['username']
         email = request.form['email']
         fullname = request.form['fullname']
         age = request.form['age']
         gender = request.form['gender']
         password = request.form['password']
-        ConfirmPassword = request.form['ConfirmPassword']
-        saltable_pw = bytes(password, encoding='utf-8')
-        salted_pw = bcrypt.hashpw(saltable_pw, bcrypt.gensalt())
-
-        if password == ConfirmPassword:
-            errorPw = True
-            return redirect(url_for('register'))
+        
+        password = password.encode('utf-8')
+        hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
+        print(hashed_pw)
+        password = hashed_pw
          #controla se nel database è gia presente un'utente loggato con quel username
         if check_user_exist(username,):
             error = True
@@ -88,35 +82,17 @@ def login():
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
         username = request.form['username']
-        user_password = request.form['password']
-        user_password_bytes = bytes(user_password, 'utf-8')
+        UserPassword = request.form['UserPassword']
+        password = request.form['Password']
+        
         error = False # errore se username o password sono errati
-        error2 = False # errore se il username non è registrato
+        error_pw = False # errore se password non corrispondono
 
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-#Otteniamo User tramite username
-        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
-        if cur is not None:
-        #otteniamo la password hashed
-            data = cur.fetchone()
-            password = data[5]
-    #compariamo la password  con la password hashed 
-            if bcrypt.checkpw(user_password.encode('utf-8'), password.encode('utf-8')):
-                app.logger['logged_in'] = True
-                session['username'] = username
-                
-                cur.close()
-                return redirect(url_for('index', global_username=username))
-            
-            else:
-                error = True
-                return render_template('login.html', error=error)
-    
-        else:
-            error2 = True
-            return render_template('login.html', error2=error2)
-    
+
+
+         
     return render_template('login.html')
 
 #GitHub Status Page

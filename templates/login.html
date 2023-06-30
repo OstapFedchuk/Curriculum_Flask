@@ -12,7 +12,8 @@
 </head>
 <body>
   <header>
-    <a href="{{ url_for('index') }}">< BACK</a>
+    <a  class="home-header" href="{{ url_for('index') }}">< HOME</a>
+    <a class="signup-header" href="{{ url_for('register') }}">SIGN UP ></a>
   </header>
   <div class="container py-4">
     <div class="contact">
@@ -35,8 +36,8 @@
         {% endblock %}
     <!-- Password input -->
         <div class="mb-3">
-            <label class="form-label" for="password">Password</label>
-            <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
+            <label class="form-label" for="UserPassword">Password</label>
+            <input class="form-control" id="password" type="password" placeholder="password" name="UserPassword"/>
         </div>
         <!-- Remember Me-->
         <div class="form-check">

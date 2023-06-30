@@ -51,6 +51,7 @@ ul {
 }
 
 .dropdown {
+    cursor: pointer;
     position: relative;
     float: right;
     padding-right: 5%;
@@ -60,11 +61,13 @@ ul {
 }
 
 .dropdown img {
+    cursor: pointer;
     position: relative;
     margin-right: 10px;
 }
   
 .dropdown:hover {
+    cursor: pointer;
     background-color: lightgrey;
     height: 44px;
 }

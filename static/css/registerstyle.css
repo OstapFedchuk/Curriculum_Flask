@@ -14,8 +14,16 @@ label {
     font-weight: bold;
 }
 
-header {
+header .home-header {
     float: left;
+    padding: 1%;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header .github-header {
+    float: right;
     padding: 1%;
     font-size: 25px;
     font-weight: bold;
@@ -28,6 +36,7 @@ header a {
 }
 
 header a:hover {
+    color:#2c3e50;
     text-decoration: underline;
     text-decoration-color: black;
 }
@@ -36,7 +45,7 @@ header a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
   }
 
 .contact {
@@ -44,7 +53,7 @@ header a:hover {
     position: absolute;
     top: 10%;
     margin: auto;
-    margin-right: 8%;
+    margin-right: 0;
 }
 
 #contactForm {
@@ -52,7 +61,7 @@ header a:hover {
     max-width: 500px;
     width: 100%;
     margin: auto;
-    margin-right: 35%;
+    margin-right: 30%;
 }
 
 h1 {
