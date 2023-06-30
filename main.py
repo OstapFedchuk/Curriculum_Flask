@@ -51,20 +51,26 @@ def index():
 @app.route('/register', methods=["POST", "GET"])
 def register():
     error = False
+    errorPw = False
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+
         username = request.form['username']
         email = request.form['email']
         fullname = request.form['fullname']
         age = request.form['age']
         gender = request.form['gender']
         password = request.form['password']
-        password_salted = bcrypt.hashpw(password, bcrypt.gensalt())
+        ConfirmPassword = request.form['ConfirmPassword']
+        saltable_pw = bytes(password, encoding='utf-8')
+        salted_pw = bcrypt.hashpw(saltable_pw, bcrypt.gensalt())
 
-        conn = sqlite3.connect('database.db')
-        cur = conn.cursor()
-
-        #controla se nel database è gia presente un'utente loggato con quel username
+        if password == ConfirmPassword:
+            errorPw = True
+            return redirect(url_for('register'))
+         #controla se nel database è gia presente un'utente loggato con quel username
         if check_user_exist(username,):
             error = True
             return render_template("register.html", error=error)

@@ -60,6 +60,11 @@
         <label class="form-label" for="password">Password</label>
         <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
       </div>
+      {% block content %}
+        {% if errorPw %}
+        <p style="color: red; font-weight: bold;">Password non corrispondono</p>
+        {% endif %}
+      {% endblock %}
     <!-- Confirm Password input(NOT INSIDE THE DATABASE) -->
       <div class="mb-3">
         <label class="form-label" for="ConfirmPassword"> Confirm Password</label>
