@@ -21,6 +21,16 @@ def check_user(username,password):
         return True
     else:
         return False
+    
+def hash_password(password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT password FROM users WHERE password = ?", (password,))
+
+    password = request.form['password']
+    password = password.encode('utf-8')
+    hash_pw = bcrypt.hashpw(password, bcrypt.gensalt())
+
 #funzione che andrà a controllare solo il username
 def check_user_exist(username):
     conn = sqlite3.connect("database.db")
@@ -62,14 +72,14 @@ def register():
         password = password.encode('utf-8')
         hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
         print(hashed_pw)
-        password = hashed_pw
+
          #controla se nel database è gia presente un'utente loggato con quel username
         if check_user_exist(username,):
             error = True
             return render_template("register.html", error=error)
  
         else:
-            register_user_to_db(username,email,fullname,age,gender,password)
+            register_user_to_db(username,email,fullname,age,gender,hashed_pw)
             return redirect(url_for('login'))
     
     else:
@@ -78,19 +88,23 @@ def register():
 #LOGIN   
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    error = False # errore se username o password sono errati
+    error_pw = False # errore se password non corrispondono
+    
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
         username = request.form['username']
         UserPassword = request.form['UserPassword']
-        password = request.form['password']
         
-        error = False # errore se username o password sono errati
-        error_pw = False # errore se password non corrispondono
+        password = request.form['password']
+        password = password.encode('utf-8')
+        hashed_pw = bcrypt.hashpw(hashed_pw, bcrypt.gensalt())
+        hashed_pw = password
 
-        conn = sqlite3.connect('database.db')
-        cur = conn.cursor()
-
-
+        UserPassword = UserPassword.encode('utf-8')
+        print(bcrypt.checkpw(UserPassword, hashed_pw))
          
     return render_template('login.html')
 
