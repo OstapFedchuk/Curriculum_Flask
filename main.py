@@ -1,6 +1,8 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 import bcrypt
+from wtforms import StringField, PasswordField, SubmitField, SelectField
+
 
 #funzione che va a recuperare la password heshed dal DB
 def retrieve_password(username):
