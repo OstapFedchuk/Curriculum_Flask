@@ -21,15 +21,6 @@ def check_user(username,password):
         return True
     else:
         return False
-    
-def hash_function(password):
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-    cur.execute("SELECT password FROM users WHERE password = ?", (password,))
-
-    password = request.form['password']
-    password = password.encode('utf-8')
-    hash_pw = bcrypt.hashpw(password, bcrypt.gensalt())
 
 #funzione che andrà a controllare solo il username
 def check_user_exist(username):
@@ -89,10 +80,7 @@ def register():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     error = False # errore se username o password sono errati
-    error_pw = False # errore se password non corrispondono
     
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
         username = request.form['username']
@@ -101,12 +89,6 @@ def login():
         if check_user_exist(username):
             error = True
             return redirect(url_for('login', error=error))
-        
-        if bcrypt.checkpw(UserPassword, hash_function(UserPassword)):
-            return redirect(url_for('index'))
-        else:
-            error_pw = True
-            return render_template('login.html', error_pw=error_pw)
  
     return render_template('login.html')
 
