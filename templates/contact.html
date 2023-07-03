@@ -20,9 +20,10 @@
                 <img src="static/images/userfoto.png" alt="userfoto"  width="40px" height="40px" /><nobr style="color: white"> {{  global_username }} </nobr>
                 <ul class="drop-nav">
                     <li><a href="{{ url_for('info') }}">Info</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('gitstatus')}}">Github Status</a></li>  
+                    <li><a href="{{ url_for('login') }}">Log In</a></li>
                     <li><a href="{{ url_for('register') }}">Sign Up</a></li>
-                    <li><a href="{{ url_for('gitstatus')}}">Github Status</a></li>       
+                    <li><a  href="{{ url_for('logout') }}">Logout</a></li>
                 </ul>
             </div>
           </header>
@@ -37,9 +38,13 @@
             <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
                 {% block content %}
                     {% if  requirements %}
-                        <div id="requirements">
-                            <p>Tutti Campi sono richiesti!</p>
-                        </div>
+                      <script>
+                        function myFunction() {
+                            alert("Tutti Campi sono richiesti");
+                        }
+
+                        myFunction();
+                      </script>
                     {% endif %}
                 {% endblock %}
                 <br>

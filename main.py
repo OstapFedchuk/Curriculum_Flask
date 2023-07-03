@@ -137,7 +137,7 @@ def gitstatus():
 #Contact Page
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
-    requirements = False
+    requirements = False # errore che serve per far comparire il messaggio nel caso in cui non vengano riempiti tutti i form
 
     if 'username' in session:
         return render_template('contact.html', global_username=session['username'])
@@ -151,7 +151,7 @@ def contact():
         message = request.form['message']
         if not name or not email or not subject or not message:
             requirements = True
-            return render_template('contact.html', requirements=requirements)
+            return render_template('contact.html', requirements=requirements, global_username=username)
 
         create_message(name,email,subject,message)
 
@@ -166,6 +166,7 @@ def about():
         username = "Guest"
     return render_template("about.html", global_username=username)
 
+# user info Page
 @app.route('/info')
 def info():
     if 'username' in session:
