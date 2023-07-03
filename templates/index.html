@@ -19,7 +19,7 @@
         <div class="dropdown">
                 <img src="static/images/userfoto.png" alt="userfoto"  width="40px" height="40px" /><nobr style="color: white"> {{  global_username }} </nobr>
             <ul class="drop-nav">
-                <li><a href="#">Info</a></li>
+                <li><a href="{{ url_for('info') }}">Info</a></li>
                 <li><a href="{{ url_for('gitstatus')}}">Github Status</a></li>  
                 <li><a href="{{ url_for('login') }}">Log In</a></li>
                 <li><a href="{{ url_for('register') }}">Sign Up</a></li>

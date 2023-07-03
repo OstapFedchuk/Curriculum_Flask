@@ -166,6 +166,14 @@ def about():
         username = "Guest"
     return render_template("about.html", global_username=username)
 
+@app.route('/info')
+def info():
+    if 'username' in session:
+        return render_template('info.html', global_username=session['username'])
+    else:
+        username = "Guest"
+    return render_template("info.html", global_username=username)
+
 #LogOut Page      
 @app.route('/logout')
 def logout():
