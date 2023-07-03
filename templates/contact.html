@@ -17,9 +17,7 @@
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
             <div class="dropdown">
-                {% block content %} 
-                    <img src="static/images/userfoto.png" alt="userfoto"  width="40px" height="40px" /><nobr style="color: white"> {{  global_username }} &raquo</nobr>
-                {% endblock %}
+                <img src="static/images/userfoto.png" alt="userfoto"  width="40px" height="40px" /><nobr style="color: white"> {{  global_username }} </nobr>
                 <ul class="drop-nav">
                     <li><a href="#">Info</a></li>
                     <li><a href="{{ url_for('login') }}">Login</a></li>
@@ -37,26 +35,34 @@
             </div>
             <!-- Bootstrap 5 starter form -->
             <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
+                {% block content %}
+                    {% if  requirements %}
+                        <div id="requirements">
+                            <p>Tutti Campi sono richiesti!</p>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                <br>
             <!-- Name input -->
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
-                    <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
+                    <input class="form-control" name="name" id="name" type="text" placeholder="Name" data-sb-validations="required" />
                 </div>
   
             <!-- Email address input -->
                 <div class="mb-3">
-                    <label class="form-label" for="emailAddress">Email Address</label>
-                    <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required, email" />
+                    <label class="form-label" for="email">Email Address</label>
+                    <input class="form-control" name="email" id="email" type="email" placeholder="Email Address" data-sb-validations="required, email"/>
                 </div>
             <!--Subject of the message-->
                 <div class="mb-3">
                     <label class="form-label" for="subject">Subject</label>
-                    <input class="form-control" id="subject" type="text" placeholder="Subject" data-sb-validations="required" />
+                    <input class="form-control" name="subject" id="subject" type="text" placeholder="Subject" data-sb-validations="required" />
                 </div>
             <!-- Message input -->
                 <div class="mb-3">
                     <label class="form-label" for="message">Message</label>
-                    <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem; resize: none;" data-sb-validations="required"></textarea>
+                    <textarea class="form-control" name="message" id="message" type="text" placeholder="Message" style="height: 10rem; resize: none;" data-sb-validations="required"></textarea>
                 </div>
   
             <!-- Form submit button -->

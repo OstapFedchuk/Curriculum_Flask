@@ -20,6 +20,14 @@ def register_user_to_db(username,email,fullname,age,gender,password):
     conn.commit()
     conn.close()
 
+#funzione che serve per salvare i dati del client del contact.html form
+def create_message(name,email,subject,message):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO messages (name,email,subject,message) VALUES (?, ?, ?, ?)", (name,email,subject,message))
+    conn.commit()
+    conn.close()
+
 #funzione che controlla se sono stati inseriti il username e la password nel database
 def check_user(username,password):
     conn = sqlite3.connect('database.db')
@@ -46,6 +54,7 @@ def check_user_exist(username):
 
 #inizio programma   
 app = Flask(__name__)
+# configuriamo la secret key situata nel 'config.py' per tenere in sicurezza la sessione del utente
 app.config.from_pyfile('config.py')
 
 #pagina iniziale del sito
@@ -128,17 +137,31 @@ def gitstatus():
 #Contact Page
 @app.route('/contact', methods=["GET", "POST"])
 def contact():
+    requirements = False
+
     if 'username' in session:
-        return render_template('index.html', global_username=session['username'])
+        return render_template('contact.html', global_username=session['username'])
     else:
         username = "Guest"
+    
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        subject = request.form['subject']
+        message = request.form['message']
+        if not name or not email or not subject or not message:
+            requirements = True
+            return render_template('contact.html', requirements=requirements)
+
+        create_message(name,email,subject,message)
+
     return render_template("contact.html", global_username=username)
 
 #About Page, with my Curriculum Vitae
 @app.route('/about')
 def about():
     if 'username' in session:
-        return render_template('index.html', global_username=session['username'])
+        return render_template('about.html', global_username=session['username'])
     else:
         username = "Guest"
     return render_template("about.html", global_username=username)

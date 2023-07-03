@@ -102,26 +102,45 @@ ul {
     display: block;
 }
 
+#requirements {
+    width: 100%;
+    height: 50px;
+    background-color: red;
+    opacity: 0.5;
+    position: relative;
+    border: 1px solid red;
+    border-radius: 5px;
+    margin-top: 15%;
+}
+
+#requirements p {
+    float: left;
+    padding-left: 5%;
+    padding-top: 2%;
+    font-weight: bold;
+    color: white;
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
+}
 
 .contact {
     text-align: center;
     position: absolute;
     top: 10%;
     margin: auto;
-    margin-left: 8%;
+    margin-left: 10%;
 }
 
 #contactForm {
     font-weight: bold;
     max-width: 500px;
     width: 100%;
-    margin-left: 12%;
+    margin-left: 15%;
 }
 
 footer {

@@ -51,7 +51,8 @@ ul {
 }
 
 .dropdown {
-    position: fixed;
+    cursor: pointer;
+    position: relative;
     float: right;
     padding-right: 5%;
     padding-left: 1%;
@@ -60,11 +61,13 @@ ul {
 }
 
 .dropdown img {
-    position: fixed;
+    cursor: pointer;
+    position: relative;
     margin-right: 10px;
 }
   
 .dropdown:hover {
+    cursor: pointer;
     background-color: lightgrey;
     height: 44px;
 }
@@ -72,7 +75,7 @@ ul {
 .drop-nav {
     cursor: pointer;
     right: 0;
-    margin-top: 45%;
+    margin-top: 1%;
     position: absolute;
     padding-left: 0;
     display: none;
@@ -176,7 +179,6 @@ h1 {
 footer {
 	border: 2px solid #2c3e50;
 	background-color: #2c3e50;
-	position: fixed;
 	padding: 0.5%;
 	bottom: 0;
     left: 0;
