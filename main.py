@@ -1,5 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
+from flask_mail import Mail, Message
 import bcrypt
 import string
 import random
@@ -77,7 +78,16 @@ def check_user_exist(username):
 app = Flask(__name__)
 # configuriamo la secret key situata nel 'config.py' per tenere in sicurezza la sessione del utente
 app.config.from_pyfile('config.py')
+mail = Mail(app) # inizializzo la classe Mail
 
+#configurazione della mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'ostappotacco1@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Ostap2006#$'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 #pagina iniziale del sito
 @app.route('/')
@@ -224,6 +234,14 @@ def recovery():
             password = retrieve_password(username)
             # la password viene sostituita
             password = hashed_rec_psw
+
+            msg = Message('Your recovery password', 
+                          sender= 'ostappotacco1@gmail.com',
+                           recipients= ['ostapit12345@gmail.com'] 
+                           )
+            msg.body = 'Hello Flask message sent form Flask-Mail'
+            mail.send(msg)
+            return 'Sent'
 
             #inserisco la nuova password all'interno del DB
             insert_rec_psw(username,password)
