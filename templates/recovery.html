@@ -10,7 +10,10 @@
     <title>Password Recovery</title>
 </head>
 <body>
-      <div class="container py-4">
+    <header>
+        <a  class="home-header" href="{{ url_for('login') }}">< LOG IN</a>
+    </header>
+    <div class="container py-4">
         <div class="contact">
             <h2><b>PASSWORD RECOVERY</b></h2>
         </div>
@@ -25,7 +28,7 @@
           {% endblock %}
           <br>
             <div class="mb-3">
-                <label class="form-label" for="username">Your Username</label>
+                <label class="form-label" for="username">Your Username<sup> *</sup></label>
                 <input class="form-control" id="username" type="text" placeholder="Username" name="username"/>
             </div>
             <br>

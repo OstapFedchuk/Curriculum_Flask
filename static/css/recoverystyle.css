@@ -10,6 +10,29 @@ label {
     display: inline;
 }
 
+sup {
+    color: red;
+}
+
+header .home-header {
+    float: left;
+    padding: 1%;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header a {
+    color: black;
+    text-decoration: none;
+}
+
+header a:hover {
+    color:#2c3e50;
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -40,7 +63,7 @@ label {
     position: absolute;
     top: 20%;
     margin: auto;
-    margin-right: 0;
+    margin-right: 8%;
 }
 
 #contactForm {
@@ -48,7 +71,7 @@ label {
     max-width: 500px;
     width: 100%;
     margin: auto;
-    margin-right: 30%;
+    margin-right: 35%;
 }
 
 h1 {
