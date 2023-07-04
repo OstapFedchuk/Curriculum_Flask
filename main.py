@@ -1,7 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 import bcrypt
-from wtforms import StringField, PasswordField, SubmitField, SelectField
 import string
 import random
 
@@ -15,22 +14,12 @@ def password_generator():
     
     return recovery_psw
 
-#funzione che recupera la password dal DB
-def retrieve_password(password):
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-    #seleziono la mail dal DB
-    cur.execute("SELECT password from users WHERE password = ?", (password,))
-    
-
-    result = cur.fetchone()
-    return result[5]
 
 #funzione che serve per settare nel Db la recovery_psw
-def insert_rec_psw(password):
+def insert_rec_psw(username,password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (password VALUES) (?)", (password,))
+    cur.execute("UPDATE users SET password = ? WHERE username=?", (password,username))
     conn.commit()
     conn.close()
 
@@ -217,22 +206,32 @@ def info():
     return render_template("info.html", global_username=username)
 
 #Password Recovery Page
-@app.route('/recovery')
+@app.route('/recovery', methods=['GET', 'POST'])
 def recovery():
+    error = False
 
-    if request.form == 'POST':
+    if request.method == 'POST':
         username = request.form['username']
-
-        if retrieve_password(username):
-            #genero la password temporanea
-            rec_psw = password_generator()
+        
+        if check_user_exist(username):
+            #genero la password temporanea senza encoddarla
+            clear_psw = password_generator()
+            #encoddo la password generata
+            rec_psw = clear_psw.encode('utf-8')
+            #hesho la password encoddata
+            hashed_rec_psw = bcrypt.hashpw(rec_psw, bcrypt.gensalt())
             #recupero la password dal DB
-            password= retrieve_password(username)
-            #password buova sar
-            password = rec_psw
+            password = retrieve_password(username)
+            # la password viene sostituita
+            password = hashed_rec_psw
 
-            insert_rec_psw(password)
-            return render_template('recovery.html', ret_psw=password)
+            #inserisco la nuova password all'interno del DB
+            insert_rec_psw(username,password)
+            return render_template('recovery.html', rec_psw=clear_psw) #passo all'utente l apassword genrata senza niente
+        
+        else:
+            error = True
+            return render_template('recovery.html', error=error)
 
 
     return render_template('recovery.html')

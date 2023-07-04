@@ -16,6 +16,14 @@
         </div>
         <!-- Bootstrap 5 starter form -->
         <form id="contactForm" method="POST" action="{{ url_for('recovery') }}">
+            {% block content %}
+            {% if error %}
+              <div id="error">
+                <p>Username non Trovato!</p>
+              </div>
+            {% endif %}
+          {% endblock %}
+          <br>
             <div class="mb-3">
                 <label class="form-label" for="username">Your Username</label>
                 <input class="form-control" id="username" type="text" placeholder="Username" name="username"/>
@@ -26,7 +34,7 @@
                 <button class="btn btn-primary btn-lg" type="submit">Get Temporary Password</button>
             </div>
             <br>
-            <p style="text-align: center;">Your Recovery Password: {{ ret_psw }}</p>
+            <p style="text-align: center;">Your Recovery Password: {{ rec_psw }}</p>
         </form>
     </div>
       <footer>
