@@ -2,7 +2,37 @@ import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 import bcrypt
 from wtforms import StringField, PasswordField, SubmitField, SelectField
+import string
+import random
 
+#password generator for recovery password
+def password_generator():
+    recovery_psw = ""
+    string.letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890\|!"£$%&/()=?*[]@#§-_:.;,'
+    
+    for x in range(10):
+        recovery_psw += random.choice(string.letters)
+    
+    return recovery_psw
+
+#funzione che recupera la password dal DB
+def retrieve_password(password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    #seleziono la mail dal DB
+    cur.execute("SELECT password from users WHERE password = ?", (password,))
+    
+
+    result = cur.fetchone()
+    return result[5]
+
+#funzione che serve per settare nel Db la recovery_psw
+def insert_rec_psw(password):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO users (password VALUES) (?)", (password,))
+    conn.commit()
+    conn.close()
 
 #funzione che va a recuperare la password heshed dal DB
 def retrieve_password(username):
@@ -58,6 +88,7 @@ def check_user_exist(username):
 app = Flask(__name__)
 # configuriamo la secret key situata nel 'config.py' per tenere in sicurezza la sessione del utente
 app.config.from_pyfile('config.py')
+
 
 #pagina iniziale del sito
 @app.route('/')
@@ -184,6 +215,27 @@ def info():
     else:
         username = "Guest"
     return render_template("info.html", global_username=username)
+
+#Password Recovery Page
+@app.route('/recovery')
+def recovery():
+
+    if request.form == 'POST':
+        username = request.form['username']
+
+        if retrieve_password(username):
+            #genero la password temporanea
+            rec_psw = password_generator()
+            #recupero la password dal DB
+            password= retrieve_password(username)
+            #password buova sar
+            password = rec_psw
+
+            insert_rec_psw(password)
+            return render_template('recovery.html', ret_psw=password)
+
+
+    return render_template('recovery.html')
 
 #LogOut Page      
 @app.route('/logout')

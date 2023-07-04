@@ -42,13 +42,17 @@
         </div>
         <!-- Remember Me-->
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="ChBox">
-          <label class="form-check-label" for="ChBox">Remember Me</label>
+          <input class="form-check-input" type="checkbox" value="" id="ChBox" name="InputRemember">
+          <label class="form-check-label" for="InputRemember">Remember Me</label>
         </div>
         <br>
         <!--Log In-->
         <div class="d-grid">
             <button class="btn btn-primary btn-lg" type="submit">Log In</button>
+        </div>
+        <div>
+          <br>
+          <a href="{{ url_for('recovery') }}">Forgot the password?</a>
         </div>
     </form>
 </div>
