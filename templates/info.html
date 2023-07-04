@@ -66,21 +66,26 @@
         <form id="contactForm2" method="POST" action="{{ url_for('info') }}">
             <br>
             <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
                 <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
             </div>
         <!-- email input -->
             <div class="mb-3">
+                <label class="form-label" for="username">Email</label>
                 <input class="form-control" id="email" type="text" placeholder="example@domain.com" name="email"/>
             </div>
         <!-- fullname input -->
             <div class="mb-3">
+                <label class="form-label" for="username">Fullname</label>
                 <input class="form-control" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
             </div>
         <!-- age input -->
             <div class="mb-3">
+                <label class="form-label" for="username">Age</label>
                 <input class="form-control" id="age" type="date" placeholder="Ex. 25" name="age"/>
             </div>
         <!--Gender input-->
+            <label class="form-label" for="username">Gender</label>
             <select class="form-select" aria-label="Default select example" name="gender" type="text">
                 <option selected>Select</option>
                 <option value="Male">Male</option>
@@ -88,28 +93,29 @@
                 <option value="Don't specify">Don't specify</option>
             </select>
             <br>
-            
-                <div id="destra-password">
-            <!-- OLD Password input -->
-                <div class="mb-3">
-                    <label class="form-label" for="OldPassword">Old Password</label>
-                    <input class="form-control" id="password" type="password" placeholder="Old Password" name="OldPassword"/>
-                </div>
-            <!-- NEW Password input -->
-                <div class="mb-3">
-                    <label class="form-label" for="NewPassword">New Password</label>
-                    <input class="form-control" id="password" type="password" placeholder="New Password" name="NewPassword"/>
-                </div>
-            <!--  COnfirm NEW Password input -->
-                <div class="mb-3">
-                    <label class="form-label" for="ConfirmNewPassword">Confirm New Password</label>
-                    <input class="form-control" id="password" type="password" placeholder="Confirm New Password" name="ConfirmNewPassword"/>
-                </div>
-            </div>
         </form>
     </div>
     
-
+    <div id="destra-password">
+            <!-- OLD Password input -->
+        <form id="" method="POST" action="{{ url_for('info') }}">
+            <div class="mb-3">
+                <label class="form-label" for="OldPassword">Old Password</label>
+                <input class="form-control" id="password" type="password" placeholder="Old Password" name="OldPassword"/>
+            </div>
+                <!-- NEW Password input -->
+            <div class="mb-3">
+                <label class="form-label" for="NewPassword">New Password</label>
+                <input class="form-control" id="password" type="password" placeholder="New Password" name="NewPassword"/>
+            </div>
+                <!--  COnfirm NEW Password input -->
+            <div class="mb-3">
+                <label class="form-label" for="ConfirmNewPassword">Confirm New Password</label>
+                <input class="form-control" id="password" type="password" placeholder="Confirm New Password" name="ConfirmNewPassword"/>
+            </div>
+        </form>
+    </div>
+            
     <footer>
         <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright© Ostap Fedchuk</b></p>
     </footer>

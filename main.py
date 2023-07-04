@@ -14,7 +14,6 @@ def password_generator():
     
     return recovery_psw
 
-
 #funzione che serve per settare nel Db la recovery_psw
 def insert_rec_psw(username,password):
     conn = sqlite3.connect('database.db')
@@ -31,7 +30,17 @@ def retrieve_password(username):
     cur.execute("SELECT password FROM users WHERE username = ?", (username,))
     
     result = cur.fetchone()
-    return result[0]     
+    return result[0]   
+
+#ritorno tutti i dati dell'utente
+def retrieve_all(username):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM users WHERE username = ?" (username,))  
+
+    result = cur.fetchall()
+    return result
 
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,gender,password):
