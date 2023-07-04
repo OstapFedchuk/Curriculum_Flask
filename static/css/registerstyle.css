@@ -9,6 +9,10 @@ label {
     font-weight: bold;
 }
 
+sup {
+    color: red;
+}
+
 header .home-header {
     float: left;
     padding: 1%;

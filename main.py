@@ -72,7 +72,8 @@ def index():
 #REGISTRAZIONE
 @app.route('/register', methods=["POST", "GET"])
 def register():
-    error = False
+    error = False #serve se il username è gia esistente
+    requirements = False # serve quando tutti campi non sono compilati
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
@@ -87,11 +88,18 @@ def register():
         hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
         print(hashed_pw)
 
+        # controlla se tutti i campi sono stati inseriti
+        if not username or not email or not fullname or not age or not gender or not password:
+            requirements = True
+            return render_template('register.html', requirements=requirements)
+
         #controla se nel database è gia presente un'utente loggato con quel username
+        # se esite allota errore diventa True e ti riporta sulla stessa pagina 
         if check_user_exist(username,):
             error = True
             return render_template("register.html", error=error)
- 
+        
+        # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
         else:
             register_user_to_db(username,email,fullname,age,gender,hashed_pw)
             return redirect(url_for('login'))

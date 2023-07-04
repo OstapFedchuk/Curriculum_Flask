@@ -13,40 +13,59 @@
     <header>
         <a class="home-header" href="{{ url_for('index') }}">< HOME</a>
         <a class="github-header" href="{{ url_for('gitstatus') }}">GITHUB STATUS ></a>
-      </header>
+    </header>
       
-      <h1>Edit Account</h1>
-      <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-            {{ form.username.label }}<br>
-            {{ current_user.id }}
-            </p>
-            <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
-            </p>
-            <p>
-            {{ form.fullname.label }}<br>
-            {{ form.fullname(size=32) }}
-            </p>
-            <p>
-            {{ form.age.label }}<br>
-            {{ form.age()}}
-            </p>
-            <p>
-            {{ form.gender.label }}<br>
-            {{ form.gender()}}
-            </p>
-            <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32)}}
-            </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="container py-4">
+        <div class="contact">
+            <h2><b>EDIT ACCOUNT</b></h2>
+        </div>
+        <!-- Bootstrap 5 starter form -->
+        <form id="contactForm" method="POST" action="{{ url_for('info') }}">
+        <!-- Name input -->
+            <br>
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
+            </div>
+        <!-- email input -->
+            <div class="mb-3">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control" id="email" type="text" placeholder="example@domain.com" name="email"/>
+            </div>
+        <!-- fullname input -->
+            <div class="mb-3">
+              <label class="form-label" for="fullname">Fullname</label>
+              <input class="form-control" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
+            </div>
+        <!-- age input -->
+            <div class="mb-3">
+              <label class="form-label" for="age">Age</label>
+              <input class="form-control" id="age" type="date" placeholder="Ex. 25" name="age"/>
+          </div>
+        <!--Gender input-->
+        <label class="for-label" for="gender">Gender</label>
+          <select class="form-select" aria-label="Default select example" name="gender" type="text">
+            <option selected>Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Don't specify">Don't specify</option>
+          </select>
+          <br>
+        <!-- Password input -->
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
+          </div>
+          <br>
+            <!--Log In-->
+            <div class="d-grid">
+                <button class="btn btn-primary btn-lg" type="submit">Sign Up</button>
+            </div>
+        </form>
+        </div>
 
-        <footer>
-          <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
-        </footer>
+    <footer>
+        <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright©: Ostap Fedchuk</b></p>
+    </footer>
 </body>
 </html>

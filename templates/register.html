@@ -29,29 +29,38 @@
               <p>Username già esistente</p>
             </div>
           {% endif %}
+          {% if requirements %}
+            <script>
+              function MyFunction() {
+                  aret("All forms are required");
+              }
+
+              MyFunction();
+            </script>
+          {% endif %}
         {% endblock %}
         <br>
         <div class="mb-3">
-            <label class="form-label" for="username">Username</label>
+            <label class="form-label" for="username">Username<sup> *</sup></label>
             <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
         </div>
     <!-- email input -->
         <div class="mb-3">
-            <label class="form-label" for="email">Email</label>
+            <label class="form-label" for="email">Email<sup> *</sup></label>
             <input class="form-control" id="email" type="text" placeholder="example@domain.com" name="email"/>
         </div>
     <!-- fullname input -->
         <div class="mb-3">
-          <label class="form-label" for="fullname">Fullname</label>
+          <label class="form-label" for="fullname">Fullname<sup> *</sup></label>
           <input class="form-control" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
         </div>
     <!-- age input -->
         <div class="mb-3">
-          <label class="form-label" for="age">Age</label>
-          <input class="form-control" id="age" type="text" placeholder="Ex. 25" name="age"/>
+          <label class="form-label" for="age">Age<sup> *</sup></label>
+          <input class="form-control" id="age" type="date" placeholder="Ex. 25" name="age"/>
       </div>
     <!--Gender input-->
-    <label class="for-label" for="gender">Gender</label>
+    <label class="for-label" for="gender">Gender<sup> *</sup></label>
       <select class="form-select" aria-label="Default select example" name="gender" type="text">
         <option selected>Select</option>
         <option value="Male">Male</option>
@@ -61,7 +70,7 @@
       <br>
     <!-- Password input -->
       <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
+        <label class="form-label" for="password">Password<sup> *</sup></label>
         <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
       </div>
       <br>
