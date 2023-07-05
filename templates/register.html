@@ -24,11 +24,6 @@
     <form id="contactForm" method="POST" action="{{ url_for('register') }}">
     <!-- Name input -->
         {% block content %}
-          {% if error %}
-            <div id="error">
-              <p>Username già esistente</p>
-            </div>
-          {% endif %}
           {% if requirements %}
             <script>
               function MyFunction() {
@@ -38,12 +33,18 @@
               MyFunction();
             </script>
           {% endif %}
-        {% endblock %}
+        
         <br>
         <div class="mb-3">
             <label class="form-label" for="username">Username<sup> *</sup></label>
             <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
         </div>
+          {% if error %}
+            <div id="error">
+              <p>Username già esistente</p>
+            </div>
+          {% endif %}
+        {% endblock %}
     <!-- email input -->
         <div class="mb-3">
             <label class="form-label" for="email">Email<sup> *</sup></label>
