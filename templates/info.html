@@ -59,30 +59,31 @@
                     </select>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary" name="action1" value="one">Commit Changes</button>
+              <button type="submit" class="btn btn-primary" name="action" value="one">Commit Changes</button>
               <br><br>
             <!--User's Password Actual Password-->
             <div class="row mb-3">
                 <label for="YourPassword" class="col-sm-2 col-form-label">Password: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="password" class="form-control" id="YourPassword" name="YourPassword" placeholder="Insert your password">
+                  <input type="password" class="form-control" id="YourPassword" name="YourPassword" placeholder="Insert your password" {% if global_checkpwd == True %} disabled {% endif %}>
+                  <button type="submit" class="btn btn-primary" name="action" value="two">Verify Password</button>
                 </div>
               </div>
             <!--User's New Password-->
             <div class="row mb-3">
                 <label for="NewPassword" class="col-sm-2 col-form-label">New Password:</label>
                 <div class="col-sm-4">
-                  <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="Insert a new password" value="">
+                  <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="Insert a new password" value="" {% if global_checkpwd == False %} disabled {% endif %}>
                 </div>
               </div>
             <!--Confirm the new User's password-->
             <div class="row mb-3">
                 <label for="ConfirmNewPassword" class="col-sm-2 col-form-label">Confirm New Password:</label>
                 <div class="col-sm-4">
-                  <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="">
+                  <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="" {% if global_checkpwd == False %} disabled {% endif %}>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary" name="action2" value="two">Change Password</button>
+              <button type="submit" class="btn btn-primary" name="action" value="three">Change Password</button>
         </form>
     </div>
     

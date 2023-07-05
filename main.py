@@ -5,6 +5,29 @@ import bcrypt
 import string
 import random
 
+
+def update_user(row,form,olduser):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+
+    if form['username'] != row[0][0]:
+        cur.execute("UPDATE users SET username = ? WHERE username=?", (form['username'],olduser))
+        conn.commit()
+    if form['email'] != row[0][1]:
+        cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['username']))
+        conn.commit()
+    if form['fullname'] != row[0][2]:
+        cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['username']))
+        conn.commit()
+    if form['age'] != row[0][3]:
+        cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['username']))
+        conn.commit()
+    if form['gender'] != row[0][4]:
+        cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['username']))
+        conn.commit()
+    
+    conn.close()
+
 #password generator for recovery password
 def password_generator():
     recovery_psw = ""
@@ -37,10 +60,11 @@ def retrieve_password(username):
 def retrieve_all(username):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-
+    #print(username)
     cur.execute("SELECT * FROM users WHERE username = ?", (username,))  
 
     result = cur.fetchall()
+    #print(result)
     return result
 
 #funzione che memorizza il username e password nel database
@@ -197,18 +221,41 @@ def about():
 # user info Page
 @app.route('/info', methods=['GET', 'POST'])
 def info():
-    if 'username' in session:
+    checkpwd = False
+    #print('pippopreusernameinsession')
+    #print(session)
+    #print(session['username'])
+    if session['logged_in'] == True and session['username']:
         row = retrieve_all(session['username']) #passo il username presente nella sessione
-        #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indici
-        return render_template('info.html', global_username=session['username'], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
-    else:
-        username = "Guest"
+        #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
 
         if request.method == "POST":
-            if request.form['submit'] == 'one':
+            #print('pippopreacttion')
+            if request.form['action'] == "one":
+                #print('pippo')
+                #print(session['username'])
                 row = retrieve_all(session['username'])
-                
+                #print(row)
+                update_user(row,request.form, row[0][0])
+                row = retrieve_all(session['username'])
+        
+            if request.form['action'] == "two":
+                YourPassword = request.form['YourPassword']
+                hashed_psw = retrieve_password(session['username'])
+                if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
+                    checkpwd = True
+            
+            if request.form['action'] == "three":
+                NewPassword = request.form['NewPassword']
+                ConfirmNewPassword = request.form['ConfirmNewPassword']
+                if NewPassword == ConfirmNewPassword:
+                    insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
 
+                
+        return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+    
+    else:
+        username = "Guest"
 
     return render_template("info.html", global_username=username)
 
