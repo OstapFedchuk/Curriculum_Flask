@@ -20,102 +20,71 @@
             <h2><b>EDIT ACCOUNT</b></h2>
             <h3>{{ global_username }} Info's</h3>
         </div>
-        
-        <div id="sinistra">
-            <form id="contactForm" method="POST" action="{{ url_for('info') }}">
-        <!-- Name input -->
-            <br>
-            <div class="mb-3">
-                <label class="form-label" for="username">Username</label>
-                <input readonly class="form-control-plaintext" id="name" type="text" placeholder="Name" name="username"/>
-            </div>
-        <!-- email input -->
-            <div class="mb-3">
-                <label class="form-label" for="email">Email</label>
-                <input readonly class="form-control-plaintext" id="email" type="text" placeholder="example@domain.com" name="email"/>
-            </div>
-        <!-- fullname input -->
-            <div class="mb-3">
-                <label class="form-label" for="fullname">Fullname</label>
-                <input readonly class="form-control-plaintext" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
-            </div>
-        <!-- age input -->
-            <div class="mb-3">
-                <label class="form-label" for="age">Age</label>
-                <input readonly class="form-control-plaintext" id="age" type="date" placeholder="Ex. 25" name="age"/>
-            </div>
-        <!--Gender input-->
-            <label class="for-label" for="gender">Gender</label>
-                <select class="form-select" aria-label="Default select example" name="gender" type="text" disabled>
-                    <option selected>Select</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Don't specify">Don't specify</option>
-                </select>
-                <br>
-        <!-- Password input -->
-            <div class="mb-3">
-                <label class="form-label" for="password">Password</label>
-                <input readonly class="form-control-plaintext" id="password" type="password" placeholder="password" name="password"/>
-            </div>
-            <br>
-        </form>
-    </div>
-<!--Parte in cui si potranno efettuare delle modifiche-->
-    <div id="destra">
-        <form id="contactForm2" method="POST" action="{{ url_for('info') }}">
-            <br>
-            <div class="mb-3">
-                <label class="form-label" for="username">Username</label>
-                <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
-            </div>
-        <!-- email input -->
-            <div class="mb-3">
-                <label class="form-label" for="username">Email</label>
-                <input class="form-control" id="email" type="text" placeholder="example@domain.com" name="email"/>
-            </div>
-        <!-- fullname input -->
-            <div class="mb-3">
-                <label class="form-label" for="username">Fullname</label>
-                <input class="form-control" id="fullname" type="text" placeholder="Surname Name" name="fullname"/>
-            </div>
-        <!-- age input -->
-            <div class="mb-3">
-                <label class="form-label" for="username">Age</label>
-                <input class="form-control" id="age" type="date" placeholder="Ex. 25" name="age"/>
-            </div>
-        <!--Gender input-->
-            <label class="form-label" for="username">Gender</label>
-            <select class="form-select" aria-label="Default select example" name="gender" type="text">
-                <option selected>Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Don't specify">Don't specify</option>
-            </select>
-            <br>
+        <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
+            <!--User's Username-->
+            <div class="row mb-3">
+                <label for="ChangeUsername" class="col-sm-2 col-form-label">Username: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="ChangeUsername" name="ChangeUsername" placeholder="Insert a new username if you plan to change it" value="">
+                </div>
+              </div>
+            <!--User's Email-->
+            <div class="row mb-3">
+                <label for="ChangeEmail" class="col-sm-2 col-form-label">Email: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                  <input type="email" class="form-control" id="ChangeEmail" name="ChangeEmail" placeholder="Insert a new email if you plan to change it" value="">
+                </div>
+              </div>
+            <!--User's FullName-->
+            <div class="row mb-3">
+                <label for="ChangeFullname" class="col-sm-2 col-form-label">Fullname: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="ChangeFullname" name="ChangeFullname" placeholder="Insert a new fullname if you plan to change it" value="">
+                </div>
+              </div>
+            <!--User's Age-->
+            <div class="row mb-3">
+                <label for="ChangeAge" class="col-sm-2 col-form-label">Age: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                  <input type="date" class="form-control" id="ChangeAge" name="ChangeAge" placeholder="Insert a new age if you plan to change it" value="">
+                </div>
+              </div>
+            <!--User's Gender-->
+            <div class="row mb-3">
+                <label for="ChangeGender" class="col-sm-2 col-form-label">Gender: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                    <select class="form-select" aria-label="Default select example" name="ChangeGender">
+                        <option selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Don't specify">Don't specify</option>
+                    </select>
+                </div>
+              </div>
+            <!--User's Password Actual Password-->
+            <div class="row mb-3">
+                <label for="ActualPassword" class="col-sm-2 col-form-label">Password: <nobr>{{ global_username }}</nobr></label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="ActualPassword" name="ActualPassword" placeholder="Insert an actual password" value="">
+                </div>
+              </div>
+            <!--User's New Password-->
+            <div class="row mb-3">
+                <label for="NewPassword" class="col-sm-2 col-form-label">New Password:</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="Insert a new password" value="">
+                </div>
+              </div>
+            <!--Confirm the new User's password-->
+            <div class="row mb-3">
+                <label for="ConfirmNewPassword" class="col-sm-2 col-form-label">Confirm New Password:</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="">
+                </div>
+              </div>
         </form>
     </div>
     
-    <div id="destra-password">
-            <!-- OLD Password input -->
-        <form id="" method="POST" action="{{ url_for('info') }}">
-            <div class="mb-3">
-                <label class="form-label" for="OldPassword">Old Password</label>
-                <input class="form-control" id="password" type="password" placeholder="Old Password" name="OldPassword"/>
-            </div>
-                <!-- NEW Password input -->
-            <div class="mb-3">
-                <label class="form-label" for="NewPassword">New Password</label>
-                <input class="form-control" id="password" type="password" placeholder="New Password" name="NewPassword"/>
-            </div>
-                <!--  COnfirm NEW Password input -->
-            <div class="mb-3">
-                <label class="form-label" for="ConfirmNewPassword">Confirm New Password</label>
-                <input class="form-control" id="password" type="password" placeholder="Confirm New Password" name="ConfirmNewPassword"/>
-            </div>
-        </form>
-    </div>
-            
     <footer>
         <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright© Ostap Fedchuk</b></p>
     </footer>
