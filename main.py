@@ -37,7 +37,7 @@ def retrieve_all(username):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM users WHERE username = ?" (username,))  
+    cur.execute("SELECT * FROM users WHERE username = ?", (username,))  
 
     result = cur.fetchall()
     return result
