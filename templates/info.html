@@ -22,49 +22,50 @@
         <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
             <div class="row mb-3">
-                <label for="ChangeUsername" class="col-sm-2 col-form-label">Username:</label>
+                <label for="username" class="col-sm-2 col-form-label">Username:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ChangeUsername" name="ChangeUsername"  value="{{ global_username }}">
+                  <input type="text" class="form-control" id="username" name="username"  value="{{ global_username }}">
                 </div>
               </div>
             <!--User's Email-->
             <div class="row mb-3">
-                <label for="ChangeEmail" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
+                <label for="email" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="email" class="form-control" id="ChangeEmail" name="ChangeEmail"  value="{{ global_email }}">
+                  <input type="email" class="form-control" id="email" name="email"  value="{{ global_email }}">
                 </div>
               </div>
             <!--User's FullName-->
             <div class="row mb-3">
-                <label for="ChangeFullname" class="col-sm-2 col-form-label">Fullname: <nobr></nobr></label>
+                <label for="fullname" class="col-sm-2 col-form-label">Fullname: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ChangeFullname" name="ChangeFullname"  value="{{ global_fullname }}">
+                  <input type="text" class="form-control" id="fullname" name="fullname"  value="{{ global_fullname }}">
                 </div>
               </div>
             <!--User's Age-->
             <div class="row mb-3">
-                <label for="ChangeAge" class="col-sm-2 col-form-label">Age: <nobr></nobr></label>
+                <label for="age" class="col-sm-2 col-form-label">Age: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="date" class="form-control" id="ChangeAge" name="ChangeAge"  value="{{ global_age }}">
+                  <input type="date" class="form-control" id="age" name="age"  value="{{ global_age }}">
                 </div>
               </div>
             <!--User's Gender-->
             <div class="row mb-3">
-                <label for="ChangeGender" class="col-sm-2 col-form-label">Gender: <nobr></nobr></label>
+                <label for="gender" class="col-sm-2 col-form-label">Gender: <nobr></nobr></label>
                 <div class="col-sm-4">
-                    <select class="form-select" aria-label="Default select example" name="ChangeGender" value="{{ global_gender }}">
-                        <option selected>Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Don't specify">Don't specify</option>
+                    <select class="form-select" aria-label="Default select example" name="gender" value="{{ global_gender }}">
+                        <option value="Male" {% if global_gender == 'Male' %} selected {% endif %}>Male</option>
+                        <option value="Female" {% if global_gender == 'Female' %} selected {% endif %}>Female</option>
+                        <option value="Unspecified" {% if global_gender == 'Unspecified' %} selected {% endif %}>Unspecified</option>
                     </select>
                 </div>
               </div>
+              <button type="submit" class="btn btn-primary" name="action1" value="one">Commit Changes</button>
+              <br><br>
             <!--User's Password Actual Password-->
             <div class="row mb-3">
-                <label for="ActualPassword" class="col-sm-2 col-form-label">Password: <nobr></nobr></label>
+                <label for="YourPassword" class="col-sm-2 col-form-label">Password: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="password" class="form-control" id="ActualPassword" name="ActualPassword" placeholder="Insert your password">
+                  <input type="password" class="form-control" id="YourPassword" name="YourPassword" placeholder="Insert your password">
                 </div>
               </div>
             <!--User's New Password-->
@@ -81,6 +82,7 @@
                   <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="">
                 </div>
               </div>
+              <button type="submit" class="btn btn-primary" name="action2" value="two">Change Password</button>
         </form>
     </div>
     

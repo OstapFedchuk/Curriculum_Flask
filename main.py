@@ -1,5 +1,6 @@
 import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
+#from wtforms import StringField,SubmitField, DateField, EmailField, SelectField
 import bcrypt
 import string
 import random
@@ -197,10 +198,18 @@ def about():
 @app.route('/info', methods=['GET', 'POST'])
 def info():
     if 'username' in session:
-        return render_template('info.html', global_username=session['username'])
-        
+        row = retrieve_all(session['username']) #passo il username presente nella sessione
+        #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indici
+        return render_template('info.html', global_username=session['username'], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
     else:
         username = "Guest"
+
+        if request.method == "POST":
+            if request.form['submit'] == 'one':
+                row = retrieve_all(session['username'])
+                
+
+
     return render_template("info.html", global_username=username)
 
 #Password Recovery Page
