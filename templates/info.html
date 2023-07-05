@@ -14,7 +14,6 @@
         <a class="home-header" href="{{ url_for('index') }}">< HOME</a>
         <a class="github-header" href="{{ url_for('gitstatus') }}">GITHUB STATUS ></a>
     </header>
-      
     <div class="container py-4">
         <div class="contact">
             <h2><b>EDIT ACCOUNT</b></h2>
@@ -23,37 +22,37 @@
         <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
             <div class="row mb-3">
-                <label for="ChangeUsername" class="col-sm-2 col-form-label">Username: <nobr>{{ global_username }}</nobr></label>
+                <label for="ChangeUsername" class="col-sm-2 col-form-label">Username:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ChangeUsername" name="ChangeUsername" placeholder="Insert a new username if you plan to change it" value="">
+                  <input type="text" class="form-control" id="ChangeUsername" name="ChangeUsername"  value="{{ global_username }}">
                 </div>
               </div>
             <!--User's Email-->
             <div class="row mb-3">
-                <label for="ChangeEmail" class="col-sm-2 col-form-label">Email: <nobr>{{ global_username }}</nobr></label>
+                <label for="ChangeEmail" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="email" class="form-control" id="ChangeEmail" name="ChangeEmail" placeholder="Insert a new email if you plan to change it" value="">
+                  <input type="email" class="form-control" id="ChangeEmail" name="ChangeEmail"  value="{{ global_email }}">
                 </div>
               </div>
             <!--User's FullName-->
             <div class="row mb-3">
-                <label for="ChangeFullname" class="col-sm-2 col-form-label">Fullname: <nobr>{{ global_username }}</nobr></label>
+                <label for="ChangeFullname" class="col-sm-2 col-form-label">Fullname: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ChangeFullname" name="ChangeFullname" placeholder="Insert a new fullname if you plan to change it" value="">
+                  <input type="text" class="form-control" id="ChangeFullname" name="ChangeFullname"  value="{{ global_fullname }}">
                 </div>
               </div>
             <!--User's Age-->
             <div class="row mb-3">
-                <label for="ChangeAge" class="col-sm-2 col-form-label">Age: <nobr>{{ global_username }}</nobr></label>
+                <label for="ChangeAge" class="col-sm-2 col-form-label">Age: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="date" class="form-control" id="ChangeAge" name="ChangeAge" placeholder="Insert a new age if you plan to change it" value="">
+                  <input type="date" class="form-control" id="ChangeAge" name="ChangeAge"  value="{{ global_age }}">
                 </div>
               </div>
             <!--User's Gender-->
             <div class="row mb-3">
-                <label for="ChangeGender" class="col-sm-2 col-form-label">Gender: <nobr>{{ global_username }}</nobr></label>
+                <label for="ChangeGender" class="col-sm-2 col-form-label">Gender: <nobr></nobr></label>
                 <div class="col-sm-4">
-                    <select class="form-select" aria-label="Default select example" name="ChangeGender">
+                    <select class="form-select" aria-label="Default select example" name="ChangeGender" value="{{ global_gender }}">
                         <option selected>Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -63,9 +62,9 @@
               </div>
             <!--User's Password Actual Password-->
             <div class="row mb-3">
-                <label for="ActualPassword" class="col-sm-2 col-form-label">Password: <nobr>{{ global_username }}</nobr></label>
+                <label for="ActualPassword" class="col-sm-2 col-form-label">Password: <nobr></nobr></label>
                 <div class="col-sm-4">
-                  <input type="password" class="form-control" id="ActualPassword" name="ActualPassword" placeholder="Insert an actual password" value="">
+                  <input type="password" class="form-control" id="ActualPassword" name="ActualPassword" placeholder="Insert your password">
                 </div>
               </div>
             <!--User's New Password-->

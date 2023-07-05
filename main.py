@@ -58,18 +58,6 @@ def create_message(name,email,subject,message):
     conn.commit()
     conn.close()
 
-#funzione che controlla se sono stati inseriti il username e la password nel database
-def check_user(username,password):
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-    cur.execute("SELECT username,password FROM users WHERE username = ? AND password = ?", (username, password))
-    
-    result = cur.fetchone()
-    if result:
-        return True
-    else:
-        return False
-
 #funzione che andrà a controllare solo il username
 def check_user_exist(username):
     conn = sqlite3.connect("database.db")
@@ -206,10 +194,11 @@ def about():
     return render_template("about.html", global_username=username)
 
 # user info Page
-@app.route('/info')
+@app.route('/info', methods=['GET', 'POST'])
 def info():
     if 'username' in session:
         return render_template('info.html', global_username=session['username'])
+        
     else:
         username = "Guest"
     return render_template("info.html", global_username=username)
@@ -241,7 +230,6 @@ def recovery():
         else:
             error = True
             return render_template('recovery.html', error=error)
-
 
     return render_template('recovery.html')
 
