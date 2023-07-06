@@ -139,11 +139,10 @@ def register():
         age = request.form['age']
         gender = request.form['gender']
         password = request.form['password']
-        
+        not_hashed_psw = password
         #procedimento per encodare e "salare" la password
         password = password.encode('utf-8')
         hashed_pw = bcrypt.hashpw(password, bcrypt.gensalt())
-        print(hashed_pw)
 
         # controlla se tutti i campi sono stati inseriti
         if not username or not email or not fullname or not age or not gender or not password:
@@ -157,9 +156,12 @@ def register():
             return render_template("register.html", error=error)
         
         # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
-        else:
+        if requirements_pass(not_hashed_psw):
             register_user_to_db(username,email,fullname,age,gender,hashed_pw)
             return redirect(url_for('login'))
+        else:
+            req_psw = True
+            return render_template('register.html', req_psw=req_psw)
     
     else:
         return render_template('register.html')

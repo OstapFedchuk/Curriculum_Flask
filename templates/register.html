@@ -44,7 +44,6 @@
               <p>Username già esistente</p>
             </div>
           {% endif %}
-        {% endblock %}
     <!-- email input -->
         <div class="mb-3">
             <label class="form-label" for="email">Email<sup> *</sup></label>
@@ -75,6 +74,9 @@
         <input class="form-control" id="password" type="password" placeholder="password" name="password"/>
       </div>
       <br>
+      {% if req_psw %}
+        <p style="color:red"><b>Minimal requirements(Min. Lenght=8, 1 Digit, 1 Upercase, 1 Lowercase, 1 Special Character)</b></p>
+      {% endif %}
         <!--Log In-->
         <div class="d-grid">
             <button class="btn btn-primary btn-lg" type="submit">Sign Up</button>
@@ -84,5 +86,6 @@
     <footer>
       <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright© Ostap Fedchuk</b></p>
     </footer>
+    {% endblock %}
 </body>
 </html>
