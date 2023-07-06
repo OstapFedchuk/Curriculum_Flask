@@ -10,6 +10,7 @@
     <title>{{ global_username }} Info</title>
 </head>
 <body>
+    {% block content %}
     <header>
         <a class="home-header" href="{{ url_for('index') }}">< HOME</a>
         <a class="github-header" href="{{ url_for('gitstatus') }}">GITHUB STATUS ></a>
@@ -19,7 +20,7 @@
             <h2><b>EDIT ACCOUNT</b></h2>
             <h3>{{ global_username }}'s Info</h3>
         </div>
-        <form id="contactForm" class="mx-auto" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
+        <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
             <div class="row mb-3">
                 <label for="username" class="col-sm-2 col-form-label">Username:</label>
@@ -67,6 +68,9 @@
                 <div class="col-sm-4">
                   <input type="password" class="form-control" id="YourPassword" name="YourPassword" placeholder="Insert your password" {% if global_checkpwd == True %} disabled {% endif %}>
                   <br>
+                  {% if error_match1 %}
+                    <p style="color: red"><b>Password don't match</b></p>
+                  {% endif %}
                   <button type="submit" class="btn btn-primary" name="action" value="two" id="verify-pass">Verify Password</button>
                 </div>
               </div>
@@ -84,14 +88,12 @@
                   <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="" {% if global_checkpwd == False %} disabled {% endif %}>
                 </div>
               </div>
-              {% block content %}
-                {% if error %}
-                    <p style="color: red">Passwords don't match</p>
+                {% if error_match %}
+                    <p style="color: red"><b>Passwords don't match</b></p>
                 {% endif %}
-                {% if error_page %}
-                <p style="color: red">Minimal requirements(Min. Lenght=8, 1 Digit, 1 Upercase,1 Special Character)</p>
+                {% if requirements %}
+                <p style="color: red"><b>Minimal requirements(Min. Lenght=8, 1 Digit, 1 Upercase, 1 Lowercase, 1 Special Character)</b></p>
                 {% endif %}
-              {% endblock %}
               <button type="submit" class="btn btn-primary" name="action" value="three">Change Password</button>
         </form>
     </div>
@@ -99,5 +101,6 @@
     <footer>
         <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright© Ostap Fedchuk</b></p>
     </footer>
+    {% endblock %}
 </body>
 </html>

@@ -8,20 +8,19 @@ import re
 
 #funzione che controlla se la password ha raggiunto i requisiti minimi per essere sicura
 def requirements_pass(NewPassword):
-    error_page = False
 
     length_error = len(NewPassword) < 8
     num_error = re.search(r"\d", NewPassword) is None
     uppercase_error = re.search(r"[A-Z]", NewPassword) is None
+    lowercase_error = re.search(r"[a-z]", NewPassword) is None
     symbol_error = re.search(r"\W", NewPassword) is None
 
-    password_ok = not ( length_error or num_error or uppercase_error or symbol_error )
+    password_ok = not ( length_error or num_error or uppercase_error or lowercase_error or symbol_error )
     
     if password_ok:
         return True
     else:
-        error_page = True
-        return render_template("info.html", error_page=error_page)    
+        return False    
 
 def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
@@ -245,9 +244,10 @@ def about():
 # user info Page
 @app.route('/info', methods=['GET', 'POST'])
 def info():
-    checkpwd = False
-    error_match = False
-    requirements = False
+    checkpwd = False # errore nel caso in cui le password corrispondano, si sbloccano altri due form
+    error_match1 = False #error se non corrisponde la password del Db con quella inserita dall'utente
+    error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
+    requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
     #print('pippopreusernameinsession')
     #print(session)
     #print(session['username'])
@@ -257,31 +257,39 @@ def info():
         #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
 
             if request.method == "POST":
-            
+                #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
                     row = retrieve_all(session['username'])
                     update_user(row,request.form, row[0][0])
                     row = retrieve_all(session['username'])
-        
+                #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente
                 if request.form['action'] == "two":
                     YourPassword = request.form['YourPassword']
                     hashed_psw = retrieve_password(session['username'])
                     if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
                         checkpwd = True
-            
+                    else:
+                        error_match1 = True
+                        return render_template('info.html', error_match1=error_match1, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+                #bottone per controllare se la nuova password è accettabile e se uguali
                 if request.form['action'] == "three":
                     NewPassword = request.form['NewPassword']
                     ConfirmNewPassword = request.form['ConfirmNewPassword']
                     NewPassword_not_hash = NewPassword
-                    if requirements_pass(NewPassword_not_hash):
-                        if NewPassword == ConfirmNewPassword:
+                    if NewPassword == ConfirmNewPassword:
+                        if requirements_pass(NewPassword_not_hash):
                             insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
                             return redirect(url_for('logout'))
-                    else:
-                        requirements_pass(NewPassword_not_hash)
-                        error_match = True
-                        return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)        
+                        else:
+                            checkpwd = True
+                            requirements = True
+                            return render_template('info.html', requirements=requirements, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                 
+                    else:
+                        error_match = True
+                        checkpwd = True
+                        return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
+        
         return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
     
     else:
