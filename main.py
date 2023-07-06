@@ -22,6 +22,7 @@ def requirements_pass(NewPassword):
     else:
         return False    
 
+#funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo modificato
 def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
@@ -76,11 +77,9 @@ def retrieve_password(username):
 def retrieve_all(username):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    #print(username)
     cur.execute("SELECT * FROM users WHERE username = ?", (username,))  
 
     result = cur.fetchall()
-    #print(result)
     return result
 
 #funzione che memorizza il username e password nel database
@@ -214,15 +213,18 @@ def contact():
         else:
             username = "Guest"
         
+        #  PER INVIARE UN MESSAGGIO NON è NECCESSARIO ESSERE LOGGATI SUL SITO
         name = request.form['name']
         email = request.form['email']
         subject = request.form['subject']
         message = request.form['message']
         print(message)
+        # se almeno un campo non è completato allora mi uscirà un alert con l'errore e mi riporterà successivamente alla stessa pagina
         if not name or not email or not subject or not message:
             requirements = True
             return render_template('contact.html', requirements=requirements, global_username=username)
 
+        #se tutto viene soddisfatto allora mi salva nel DB tutte le informazioni dal contact.html
         create_message(name,email,subject,message)
 
     if 'username' in session:
@@ -250,34 +252,35 @@ def info():
     error_match1 = False #error se non corrisponde la password del Db con quella inserita dall'utente
     error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
     requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
-    #print('pippopreusernameinsession')
-    #print(session)
-    #print(session['username'])
+
     if 'username' in session:
         if session['logged_in'] == True and session['username']:
-            row = retrieve_all(session['username']) #passo il username presente nella sessione
-        #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
+            row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
-                    row = retrieve_all(session['username'])
-                    update_user(row,request.form, row[0][0])
-                    row = retrieve_all(session['username'])
-                #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente
+                    row = retrieve_all(session['username']) 
+                    update_user(row,request.form, row[0][0]) 
+                    row = retrieve_all(session['username']) 
+                #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":
                     YourPassword = request.form['YourPassword']
                     hashed_psw = retrieve_password(session['username'])
                     if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
                         checkpwd = True
+                    # se no mi rimanda alla stessa pagina con un errore che le password non corrispondano
                     else:
                         error_match1 = True
+                        #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
                         return render_template('info.html', error_match1=error_match1, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
                 #bottone per controllare se la nuova password è accettabile e se uguali
                 if request.form['action'] == "three":
                     NewPassword = request.form['NewPassword']
                     ConfirmNewPassword = request.form['ConfirmNewPassword']
+                    #mi salvo la password non heshata per poi vedere se soddisfa i requisiti minimi
                     NewPassword_not_hash = NewPassword
+                    #se le passsword corrispondano e soddisfa i requisiti allora me la salva nel Db e mi slogga portando alla pagina index
                     if NewPassword == ConfirmNewPassword:
                         if requirements_pass(NewPassword_not_hash):
                             insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
@@ -293,7 +296,7 @@ def info():
                         return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
         
         return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
-    
+    #se l'utente non è loggato, non sarà in grado di accedere a questa pagina
     else:
         username = "Guest"
         requirements = True
