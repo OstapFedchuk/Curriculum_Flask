@@ -4,7 +4,24 @@ from flask import Flask, redirect, url_for, render_template, request, session
 import bcrypt
 import string
 import random
+import re
 
+#funzione che controlla se la password ha raggiunto i requisiti minimi per essere sicura
+def requirements_pass(NewPassword):
+    error_page = False
+
+    length_error = len(NewPassword) < 8
+    num_error = re.search(r"\d", NewPassword) is None
+    uppercase_error = re.search(r"[A-Z]", NewPassword) is None
+    symbol_error = re.search(r"\W", NewPassword) is None
+
+    password_ok = not ( length_error or num_error or uppercase_error or symbol_error )
+    
+    if password_ok:
+        return True
+    else:
+        error_page = True
+        return render_template("info.html", error_page=error_page)    
 
 def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
@@ -109,7 +126,6 @@ def index():
     else:
         username = "Guest"
     return render_template("index.html", global_username=username)
-    
 
 #REGISTRAZIONE
 @app.route('/register', methods=["POST", "GET"])
@@ -191,21 +207,29 @@ def gitstatus():
 def contact():
     requirements = False # errore che serve per far comparire il messaggio nel caso in cui non vengano riempiti tutti i form
 
-    if 'username' in session:
-        return render_template('contact.html', global_username=session['username'])
-    else:
-        username = "Guest"
-    
     if request.method == 'POST':
+        if 'username' in session:
+            username = session['username']
+        else:
+            username = "Guest"
+        
         name = request.form['name']
         email = request.form['email']
         subject = request.form['subject']
         message = request.form['message']
+        print(message)
         if not name or not email or not subject or not message:
             requirements = True
             return render_template('contact.html', requirements=requirements, global_username=username)
 
         create_message(name,email,subject,message)
+
+    if 'username' in session:
+        username = session['username']
+    else:
+        username = "Guest"
+
+    
 
     return render_template("contact.html", global_username=username)
 
@@ -222,42 +246,51 @@ def about():
 @app.route('/info', methods=['GET', 'POST'])
 def info():
     checkpwd = False
+    error_match = False
+    requirements = False
     #print('pippopreusernameinsession')
     #print(session)
     #print(session['username'])
-    if session['logged_in'] == True and session['username']:
-        row = retrieve_all(session['username']) #passo il username presente nella sessione
+    if 'username' in session:
+        if session['logged_in'] == True and session['username']:
+            row = retrieve_all(session['username']) #passo il username presente nella sessione
         #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
 
-        if request.method == "POST":
-            #print('pippopreacttion')
-            if request.form['action'] == "one":
-                #print('pippo')
-                #print(session['username'])
-                row = retrieve_all(session['username'])
-                #print(row)
-                update_user(row,request.form, row[0][0])
-                row = retrieve_all(session['username'])
-        
-            if request.form['action'] == "two":
-                YourPassword = request.form['YourPassword']
-                hashed_psw = retrieve_password(session['username'])
-                if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
-                    checkpwd = True
+            if request.method == "POST":
             
-            if request.form['action'] == "three":
-                NewPassword = request.form['NewPassword']
-                ConfirmNewPassword = request.form['ConfirmNewPassword']
-                if NewPassword == ConfirmNewPassword:
-                    insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
-
+                if request.form['action'] == "one":
+                    row = retrieve_all(session['username'])
+                    update_user(row,request.form, row[0][0])
+                    row = retrieve_all(session['username'])
+        
+                if request.form['action'] == "two":
+                    YourPassword = request.form['YourPassword']
+                    hashed_psw = retrieve_password(session['username'])
+                    if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
+                        checkpwd = True
+            
+                if request.form['action'] == "three":
+                    NewPassword = request.form['NewPassword']
+                    ConfirmNewPassword = request.form['ConfirmNewPassword']
+                    NewPassword_not_hash = NewPassword
+                    if requirements_pass(NewPassword_not_hash):
+                        if NewPassword == ConfirmNewPassword:
+                            insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
+                            return redirect(url_for('logout'))
+                    else:
+                        requirements_pass(NewPassword_not_hash)
+                        error_match = True
+                        return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)        
                 
         return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
     
     else:
         username = "Guest"
+        requirements = True
+        return render_template('index.html', requirements=requirements, global_username=username)
 
-    return render_template("info.html", global_username=username)
+
+#Edit Account if the User is a
 
 #Password Recovery Page
 @app.route('/recovery', methods=['GET', 'POST'])

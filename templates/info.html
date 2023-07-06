@@ -17,9 +17,9 @@
     <div class="container py-4">
         <div class="contact">
             <h2><b>EDIT ACCOUNT</b></h2>
-            <h3>{{ global_username }} Info's</h3>
+            <h3>{{ global_username }}'s Info</h3>
         </div>
-        <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
+        <form id="contactForm" class="mx-auto" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
             <div class="row mb-3">
                 <label for="username" class="col-sm-2 col-form-label">Username:</label>
@@ -66,7 +66,8 @@
                 <label for="YourPassword" class="col-sm-2 col-form-label">Password: <nobr></nobr></label>
                 <div class="col-sm-4">
                   <input type="password" class="form-control" id="YourPassword" name="YourPassword" placeholder="Insert your password" {% if global_checkpwd == True %} disabled {% endif %}>
-                  <button type="submit" class="btn btn-primary" name="action" value="two">Verify Password</button>
+                  <br>
+                  <button type="submit" class="btn btn-primary" name="action" value="two" id="verify-pass">Verify Password</button>
                 </div>
               </div>
             <!--User's New Password-->
@@ -83,6 +84,14 @@
                   <input type="password" class="form-control" id="ConfirmNewPassword" name="ConfirmNewPassword" placeholder="Insert to confirm the new password" value="" {% if global_checkpwd == False %} disabled {% endif %}>
                 </div>
               </div>
+              {% block content %}
+                {% if error %}
+                    <p style="color: red">Passwords don't match</p>
+                {% endif %}
+                {% if error_page %}
+                <p style="color: red">Minimal requirements(Min. Lenght=8, 1 Digit, 1 Upercase,1 Special Character)</p>
+                {% endif %}
+              {% endblock %}
               <button type="submit" class="btn btn-primary" name="action" value="three">Change Password</button>
         </form>
     </div>
