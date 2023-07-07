@@ -24,27 +24,38 @@ def requirements_pass(NewPassword):
 
 #funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo
 def update_user(row,form,olduser):
+    error_exist = False # serve nel caso in cui vogliamo cambaire il username e quello è gia in uso
+
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
+    session['username'] = form['FormUsername']
     if form['FormUsername'] != row[0][0]:
         cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
         conn.commit()
-        session['username'] = form['FormUsername']
     if form['email'] != row[0][1]:
-        cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['username']))
+        cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
         conn.commit()
     if form['fullname'] != row[0][2]:
-        cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['username']))
+        cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['FormUsername']))
         conn.commit()
     if form['age'] != row[0][3]:
-        cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['username']))
+        cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['FormUsername']))
         conn.commit()
     if form['gender'] != row[0][4]:
-        cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['username']))
+        cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['FormUsername']))
         conn.commit()
-    
+
     conn.close()
+
+    result = cur.fetchall()
+    if result: 
+        return True
+    else:
+        return False
+    
+    
+
 
 #password generator for recovery password
 def password_generator():
@@ -253,6 +264,7 @@ def info():
     error_match1 = False #error se non corrisponde la password del Db con quella inserita dall'utente
     error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
     requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
+    error_exist = False
 
     if 'username' in session:
         if session['logged_in'] == True and session['username']:
@@ -264,9 +276,14 @@ def info():
                 if request.form['action'] == "one":
                     print(session['username'])
                     row = retrieve_all(session['username'])
-                    print(row) 
-                    update_user(row,request.form, row[0][0]) 
-                    row = retrieve_all(session['username'])
+                    print(row)
+                    result = update_user(row,request.form, row[0][0]) 
+                    if result: 
+                        update_user(row,request.form, row[0][0]) 
+                        row = retrieve_all(session['username'])
+                    else:
+                        error_exist = True
+                        return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
                     print(row) 
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
