@@ -22,14 +22,15 @@ def requirements_pass(NewPassword):
     else:
         return False    
 
-#funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo modificato
+#funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo
 def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
-    if form['username'] != row[0][0]:
-        cur.execute("UPDATE users SET username = ? WHERE username=?", (form['username'],olduser))
+    if form['FormUsername'] != row[0][0]:
+        cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
         conn.commit()
+        session['username'] = form['FormUsername']
     if form['email'] != row[0][1]:
         cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['username']))
         conn.commit()
@@ -258,11 +259,16 @@ def info():
             row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
+                
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
-                    row = retrieve_all(session['username']) 
+                    print(session['username'])
+                    row = retrieve_all(session['username'])
+                    print(row) 
                     update_user(row,request.form, row[0][0]) 
-                    row = retrieve_all(session['username']) 
+                    row = retrieve_all(session['username'])
+                    print(row) 
+                
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":
                     YourPassword = request.form['YourPassword']
@@ -274,6 +280,7 @@ def info():
                         error_match1 = True
                         #in questo caso visto che richiediamo tutti i valori della riga, c'è lo passa come una matrice quindi è necessario l'utilizzo di 2 indic
                         return render_template('info.html', error_match1=error_match1, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+                
                 #bottone per controllare se la nuova password è accettabile e se uguali
                 if request.form['action'] == "three":
                     NewPassword = request.form['NewPassword']
@@ -294,8 +301,8 @@ def info():
                         error_match = True
                         checkpwd = True
                         return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
-        
-        return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+            print(row)
+            return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
     #se l'utente non è loggato, non sarà in grado di accedere a questa pagina
     else:
         username = "Guest"

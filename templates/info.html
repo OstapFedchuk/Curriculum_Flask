@@ -23,11 +23,14 @@
         <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
             <div class="row mb-3">
-                <label for="username" class="col-sm-2 col-form-label">Username:</label>
+                <label for="FormUsername" class="col-sm-2 col-form-label">Username:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="username" name="username"  value="{{ global_username }}">
+                  <input type="text" class="form-control" id="FormUsername" name="FormUsername"  value="{{ global_username }}">
                 </div>
               </div>
+              {% if error_exist %}
+                <p style="color: red"><b>Username is already taken</b></p>
+              {% endif %}
             <!--User's Email-->
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
