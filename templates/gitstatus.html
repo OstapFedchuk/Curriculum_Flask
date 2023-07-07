@@ -14,9 +14,12 @@
 <body>
   <header>
     <a class="home-header" href="{{ url_for('index') }}">< HOME</a>
-    <a class="login-header" href="{{ url_for('login') }}">LOG IN ></a>
+    <a class="login-header" href="{{ url_for('register') }}">LOGIN ></a>
   </header>
-  
+  <div id="github-link">
+    <a href="https://github.com/OstapFedchuk/github-calendar" >GITHUB CALENDAR CHART</a>
+  </div>
+  <div id="main-calendar">
   <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
 
   <!-- Optionally, include the theme (if you don't want to struggle to write the CSS) -->
@@ -41,6 +44,7 @@
        }
     }).then(r => r.text())
 </script>
+</div>
     <footer>
       <p style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>2023 Copyright© Ostap Fedchuk</b></p>
     </footer>

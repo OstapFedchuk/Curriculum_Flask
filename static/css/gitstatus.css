@@ -10,16 +10,15 @@ label {
 }
 
 header .home-header {
-    float: left;
-    padding: 1%;
+    position: relative;
     font-size: 25px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 header .login-header {
-    float: right;
-    padding: 1%;
+    position: relative;
+    left: 85%;
     font-size: 25px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
@@ -34,6 +33,27 @@ header a:hover {
     color:#2c3e50;
     text-decoration: underline;
     text-decoration-color: black;
+}
+
+#github-link {
+    position: relative;
+    margin-top: 10%;
+    margin-left: 40%;
+}
+
+#github-link a {
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration-color: black;
+    color: black;
+}
+
+#github-link a:hover {
+    color: green;
+}
+
+#main-calendar {
+    margin-top: 10%;
 }
 
 .calendar {
