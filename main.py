@@ -29,10 +29,11 @@ def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
-    session['username'] = form['FormUsername']
+    
     if form['FormUsername'] != row[0][0]:
         cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
         conn.commit()
+        session['username'] = form['FormUsername']
     else:
         error_exist = True
         return render_template("info.html", error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
@@ -272,7 +273,6 @@ def info():
                     print(session['username'])
                     row = retrieve_all(session['username'])
                     print(row)
-                    update_user(row,request.form, FormUsername) 
                     update_user(row,request.form, row[0][0]) 
                     row = retrieve_all(session['username'])
                     success = True
