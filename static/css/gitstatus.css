@@ -12,6 +12,7 @@ label {
 header .home-header {
     position: relative;
     font-size: 25px;
+    left: 2%;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }

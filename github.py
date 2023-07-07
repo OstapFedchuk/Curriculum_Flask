@@ -12,6 +12,7 @@ x = requests.post(url, json={'query':query}, headers={"Authorization": "Bearer "
 print(x)
 #print(x.json())
 
+#serve per andare a recuperare il numero di commit fatti e ache a creare il file con tutte le contribution
 json_data = x.json()
 print(json_data["data"]["user"]["contributionsCollection"]["contributionCalendar"]["totalContributions"])
 save_file = open("savedata.json", "w")
