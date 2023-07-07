@@ -33,6 +33,9 @@ def update_user(row,form,olduser):
     if form['FormUsername'] != row[0][0]:
         cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
         conn.commit()
+    else:
+        error_exist = True
+        return render_template("info.html", error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
     if form['email'] != row[0][1]:
         cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
         conn.commit()
@@ -47,16 +50,8 @@ def update_user(row,form,olduser):
         conn.commit()
 
     conn.close()
-
-    result = cur.fetchall()
-    if result: 
-        return True
-    else:
-        return False
     
     
-
-
 #password generator for recovery password
 def password_generator():
     recovery_psw = ""
@@ -264,26 +259,23 @@ def info():
     error_match1 = False #error se non corrisponde la password del Db con quella inserita dall'utente
     error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
     requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
-    error_exist = False
+    success = False
 
     if 'username' in session:
         if session['logged_in'] == True and session['username']:
             row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
-                
+                FormUsername = request.form['FormUsername']
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
                     print(session['username'])
                     row = retrieve_all(session['username'])
                     print(row)
-                    result = update_user(row,request.form, row[0][0]) 
-                    if result: 
-                        update_user(row,request.form, row[0][0]) 
-                        row = retrieve_all(session['username'])
-                    else:
-                        error_exist = True
-                        return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+                    update_user(row,request.form, FormUsername) 
+                    update_user(row,request.form, row[0][0]) 
+                    row = retrieve_all(session['username'])
+                    success = True
                     print(row) 
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
@@ -319,7 +311,7 @@ def info():
                         checkpwd = True
                         return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
             print(row)
-            return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+            return render_template('info.html',success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
     #se l'utente non è loggato, non sarà in grado di accedere a questa pagina
     else:
         username = "Guest"

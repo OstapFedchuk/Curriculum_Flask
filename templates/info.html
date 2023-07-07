@@ -64,6 +64,9 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" name="action" value="one">Commit Changes</button>
+              {% if success %}
+                    <nobr style="color: green; margin-left: 5%;"><b> Changes made successfully</b></nobr>
+                {% endif %}
               <br><br>
             <!--User's Password Actual Password-->
             <div class="row mb-3">
