@@ -34,9 +34,6 @@ def update_user(row,form,olduser):
         cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
         conn.commit()
         session['username'] = form['FormUsername']
-    else:
-        error_exist = True
-        return render_template("info.html", error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
     if form['email'] != row[0][1]:
         cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
         conn.commit()
@@ -260,7 +257,7 @@ def info():
     error_match1 = False #error se non corrisponde la password del Db con quella inserita dall'utente
     error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
     requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
-    success = False
+    success = False #serve nel caso in cui le modifiche avvengono col successo
 
     if 'username' in session:
         if session['logged_in'] == True and session['username']:

@@ -48,6 +48,15 @@ header a:hover {
     margin-top: -12%;
 }
 
+#success {
+    animation: cssAnimation 0s 5s forwards;
+    visibility: visible;
+}
+
+@keyframes cssAnimation {
+    to { visibility: hidden;}
+}
+
 h1 {
     margin: 10%;
     text-align: center;
