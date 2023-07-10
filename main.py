@@ -226,7 +226,7 @@ def contact():
         email = request.form['email']
         subject = request.form['subject']
         message = request.form['message']
-        print(message)
+
         # se almeno un campo non è completato allora mi uscirà un alert con l'errore e mi riporterà successivamente alla stessa pagina
         if not name or not email or not subject or not message:
             requirements = True
