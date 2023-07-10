@@ -146,7 +146,6 @@ def index():
 @app.route('/register', methods=["POST", "GET"])
 def register():
     error = False #serve se il username è gia esistente
-    error_email = False #nel caso in cui l'email inserita è gia in utlilizzo
     requirements = False # serve quando tutti campi non sono compilati
 
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
@@ -170,6 +169,7 @@ def register():
         #controlla se nel database è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
         if check_user_exist(username) and check_email_exist(email):
+            print(check_user_exist(username), check_email_exist(email))
             error = True
             return render_template("register.html", error=error)
         

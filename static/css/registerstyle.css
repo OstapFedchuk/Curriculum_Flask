@@ -44,7 +44,7 @@ header a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 92vh;
 }
 
 #error {
@@ -78,8 +78,9 @@ header a:hover {
     font-weight: bold;
     max-width: 500px;
     width: 100%;
-    margin-top: -10%;
+    margin-top: 10%;
     margin-left: 0;
+    margin-bottom: 0;
 }
 
 h1 {
