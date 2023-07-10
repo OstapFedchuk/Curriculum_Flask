@@ -36,8 +36,13 @@
         
         <br>
         {% if error %}
-            <div id="error">
+            <div class="error">
               <p>Username o Email già in uso</p>
+            </div>
+          {% endif %}
+          {% if error2 %}
+            <div class="error">
+              <p>Username e Email già in uso</p>
             </div>
           {% endif %}
         <!--Username Input-->

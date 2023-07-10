@@ -48,6 +48,12 @@ header a:hover {
     margin-top: -12%;
 }
 
+#FormUsername:disabled {
+    font-weight: bold;
+    background-color: white;
+    border: none;
+}
+
 #success {
     animation: cssAnimation 0s 5s forwards;
     visibility: visible;

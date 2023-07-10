@@ -73,7 +73,7 @@ def retrieve_password(username):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     #inserendo il username dell'utente andiamo a recuperare la passsword dal DB
-    cur.execute("SELECT password FROM users WHERE username = ?", (username,))
+    cur.execute("SELECT password FROM users WHERE username = ? OR email = ?", (username,username))
     
     result = cur.fetchone()
     return result[0]   
@@ -85,6 +85,15 @@ def retrieve_all(username):
     cur.execute("SELECT * FROM users WHERE username = ?", (username,))  
 
     result = cur.fetchall()
+    return result
+
+#funzione ch emi ritorna l mail dal DB
+def retrieve_email(username):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("SELECT email FROM users WHERE username = ?", (username,))  
+
+    result = cur.fetchone()
     return result
 
 #funzione che memorizza il username e password nel database
@@ -107,7 +116,7 @@ def create_message(name,email,subject,message):
 def check_user_exist(username):
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
-    cur.execute("SELECT username,email FROM users WHERE username = ?", (username,))
+    cur.execute("SELECT username FROM users WHERE username = ?", (username,))
 
     result = cur.fetchone()
     if result:
@@ -148,6 +157,7 @@ def register():
     error = False #serve se il username è gia esistente
     requirements = False # serve quando tutti campi non sono compilati
 
+
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
@@ -168,11 +178,10 @@ def register():
 
         #controlla se nel database è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
-        if check_user_exist(username) and check_email_exist(email):
-            print(check_user_exist(username), check_email_exist(email))
+        if check_user_exist(username) or check_email_exist(email):
             error = True
             return render_template("register.html", error=error)
-        
+
         # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
         if requirements_pass(not_hashed_psw):
             register_user_to_db(username,email,fullname,age,gender,hashed_pw)
@@ -191,18 +200,18 @@ def login():
     
     #permetto di ottenere l'accesso ai dati inseriti, controllo se esiste tra quelli gia loggati e riporto sulla pagina home
     if request.method == 'POST':
-        username = request.form['username']
+        User = request.form['username']
         UserPassword = request.form['UserPassword']
-        
+
         #controllo l'esistenza del username
-        if check_user_exist(username):
+        if check_user_exist(User) or check_email_exist(User):
             #recupero dal DB la password hashed
-            hashed_psw = retrieve_password(username)
+            hashed_psw = retrieve_password(User)
             #controllo se la PSW recuperata è uguale a quella inserita
             if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw):
                 #salvo nella sessione il username e riporto nella pagina index
                 session['logged_in'] = True
-                session['username'] = username
+                session['username'] = User
                 return redirect(url_for('index'))
             # se username non esiste mi ritorna al login.html con un errore visivo
             else:
