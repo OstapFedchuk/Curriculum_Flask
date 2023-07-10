@@ -107,7 +107,7 @@ def create_message(name,email,subject,message):
 def check_user_exist(username):
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
-    cur.execute("SELECT username FROM users WHERE username = ?", (username,))
+    cur.execute("SELECT username,email FROM users WHERE username = ?", (username,))
 
     result = cur.fetchone()
     if result:
@@ -116,10 +116,10 @@ def check_user_exist(username):
         return False
     
 #funzione che andrà a controllare solo il username
-def check_email_exist(username):
+def check_email_exist(email):
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
-    cur.execute("SELECT email FROM users WHERE username = ?", (username,))
+    cur.execute("SELECT email FROM users WHERE email = ?", (email,))
 
     result = cur.fetchone()
     if result:
@@ -169,13 +169,9 @@ def register():
 
         #controlla se nel database è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
-        if check_user_exist(username):
+        if check_user_exist(username) and check_email_exist(email):
             error = True
             return render_template("register.html", error=error)
-        
-        if check_email_exist(username):
-            error_email = True
-            return render_template("register.html", error_email=error_email)
         
         # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
         if requirements_pass(not_hashed_psw):
