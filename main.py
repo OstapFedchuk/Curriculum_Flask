@@ -153,7 +153,7 @@ def register():
             requirements = True
             return render_template('register.html', requirements=requirements)
 
-        #controla se nel database è gia presente un'utente loggato con quel username
+        #controlla se nel database è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
         if check_user_exist(username,):
             error = True
