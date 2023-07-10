@@ -3,40 +3,8 @@
             "user": {
                   "contributionsCollection": {
                         "contributionCalendar": {
-                              "totalContributions": 144,
+                              "totalContributions": 153,
                               "weeks": [
-                                    {
-                                          "contributionDays": [
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-03"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-04"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-05"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-06"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-07"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-08"
-                                                },
-                                                {
-                                                      "contributionCount": 0,
-                                                      "date": "2022-07-09"
-                                                }
-                                          ]
-                                    },
                                     {
                                           "contributionDays": [
                                                 {
@@ -1692,8 +1660,24 @@
                                                       "date": "2023-07-06"
                                                 },
                                                 {
-                                                      "contributionCount": 3,
+                                                      "contributionCount": 9,
                                                       "date": "2023-07-07"
+                                                },
+                                                {
+                                                      "contributionCount": 0,
+                                                      "date": "2023-07-08"
+                                                }
+                                          ]
+                                    },
+                                    {
+                                          "contributionDays": [
+                                                {
+                                                      "contributionCount": 0,
+                                                      "date": "2023-07-09"
+                                                },
+                                                {
+                                                      "contributionCount": 3,
+                                                      "date": "2023-07-10"
                                                 }
                                           ]
                                     }

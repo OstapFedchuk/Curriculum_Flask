@@ -29,23 +29,23 @@ def update_user(row,form,olduser):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
 
-    
-    if form['FormUsername'] != row[0][0]:
-        cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
-        conn.commit()
-        session['username'] = form['FormUsername']
-    if form['email'] != row[0][1]:
-        cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
-        conn.commit()
-    if form['fullname'] != row[0][2]:
-        cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['FormUsername']))
-        conn.commit()
-    if form['age'] != row[0][3]:
-        cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['FormUsername']))
-        conn.commit()
-    if form['gender'] != row[0][4]:
-        cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['FormUsername']))
-        conn.commit()
+    if not check_user_exist(form['FormUsername']):
+        if form['FormUsername'] != row[0][0]:
+            cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
+            conn.commit()
+            session['username'] = form['FormUsername']
+        if form['email'] != row[0][1]:
+            cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
+            conn.commit()
+        if form['fullname'] != row[0][2]:
+            cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['FormUsername']))
+            conn.commit()
+        if form['age'] != row[0][3]:
+            cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['FormUsername']))
+            conn.commit()
+        if form['gender'] != row[0][4]:
+            cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['FormUsername']))
+            conn.commit()
 
     conn.close()
     
@@ -114,6 +114,18 @@ def check_user_exist(username):
         return True
     else: 
         return False
+    
+#funzione che andrà a controllare solo il username
+def check_email_exist(username):
+    conn = sqlite3.connect("database.db")
+    cur = conn.cursor()
+    cur.execute("SELECT email FROM users WHERE username = ?", (username,))
+
+    result = cur.fetchone()
+    if result:
+        return True
+    else: 
+        return False
 
 #inizio programma   
 app = Flask(__name__)
@@ -134,7 +146,9 @@ def index():
 @app.route('/register', methods=["POST", "GET"])
 def register():
     error = False #serve se il username è gia esistente
+    error_email = False #nel caso in cui l'email inserita è gia in utlilizzo
     requirements = False # serve quando tutti campi non sono compilati
+
     #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
     if request.method == 'POST':
         username = request.form['username']
@@ -155,9 +169,13 @@ def register():
 
         #controlla se nel database è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
-        if check_user_exist(username,):
+        if check_user_exist(username):
             error = True
             return render_template("register.html", error=error)
+        
+        if check_email_exist(username):
+            error_email = True
+            return render_template("register.html", error_email=error_email)
         
         # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
         if requirements_pass(not_hashed_psw):
