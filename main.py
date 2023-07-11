@@ -2,9 +2,6 @@ import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 #from wtforms import StringField,SubmitField, DateField, EmailField, SelectField
 import bcrypt
-import string
-import random
-import re
 from functions import *
 
 #inizio programma   
@@ -159,7 +156,6 @@ def info():
             row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
-                FormUsername = request.form['FormUsername']
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
                     print(session['username'])
@@ -209,9 +205,6 @@ def info():
         username = "Guest"
         requirements = True
         return render_template('index.html', requirements=requirements, global_username=username)
-
-
-#Edit Account if the User is a
 
 #Password Recovery Page
 @app.route('/recovery', methods=['GET', 'POST'])

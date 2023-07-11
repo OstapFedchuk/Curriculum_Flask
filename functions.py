@@ -23,28 +23,22 @@ def requirements_pass(NewPassword):
         return False    
 
 #funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo
-def update_user(row,form,olduser):
-    error_exist = False # serve nel caso in cui vogliamo cambaire il username e quello è gia in uso
-
+def update_user(row,form,username):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-
-    if not check_user_exist(form['FormUsername']):
-        if form['FormUsername'] != row[0][0]:
-            cur.execute("UPDATE users SET username = ? WHERE username=?", (form['FormUsername'],olduser))
-            conn.commit()
-            session['username'] = form['FormUsername']
-        if form['email'] != row[0][1]:
-            cur.execute("UPDATE users SET email = ? WHERE username=?", (form['email'],form['FormUsername']))
+        
+    if not check_email_exist(form['FormEmail']):
+        if form['FormEmail'] != row[0][1]:
+            cur.execute("UPDATE users SET email = ? WHERE username=?", (form['FormEmail'],username))
             conn.commit()
         if form['fullname'] != row[0][2]:
-            cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],form['FormUsername']))
+            cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],username))
             conn.commit()
         if form['age'] != row[0][3]:
-            cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],form['FormUsername']))
+            cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],username))
             conn.commit()
         if form['gender'] != row[0][4]:
-            cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],form['FormUsername']))
+            cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],username))
             conn.commit()
 
     conn.close()
