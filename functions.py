@@ -40,9 +40,6 @@ def update_user(row,form,username):
     if form['fullname'] != row[0][2]:
         cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],username))
         conn.commit()
-    else:
-        error_exist = True
-        return error_exist
     if form['age'] != row[0][3]:
         cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],username))
         conn.commit()
