@@ -31,15 +31,16 @@ def update_user(row,form,username):
         if form['FormEmail'] != row[0][1]:
             cur.execute("UPDATE users SET email = ? WHERE username=?", (form['FormEmail'],username))
             conn.commit()
-        if form['fullname'] != row[0][2]:
-            cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],username))
-            conn.commit()
-        if form['age'] != row[0][3]:
-            cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],username))
-            conn.commit()
-        if form['gender'] != row[0][4]:
-            cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],username))
-            conn.commit()
+        print("fullname =" + row[0][2])
+    if form['fullname'] != row[0][2]:
+        cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],username))
+        conn.commit()
+    if form['age'] != row[0][3]:
+        cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],username))
+        conn.commit()
+    if form['gender'] != row[0][4]:
+        cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],username))
+        conn.commit()
 
     conn.close()
     

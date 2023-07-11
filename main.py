@@ -70,7 +70,7 @@ def login():
     if request.method == 'POST':
         User = request.form['username']
         UserPassword = request.form['UserPassword']
-        
+
         username_ret = retrieve_user(User)
         #controllo l'esistenza del username
         if check_user_exist(User) or check_email_exist(User):
@@ -158,13 +158,10 @@ def info():
             if request.method == "POST":
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
-                    print(session['username'])
                     row = retrieve_all(session['username'])
-                    print(row)
                     update_user(row,request.form, row[0][0]) 
                     row = retrieve_all(session['username'])
                     success = True
-                    print(row) 
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":
