@@ -159,9 +159,13 @@ def info():
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
                     row = retrieve_all(session['username'])
-                    update_user(row,request.form, row[0][0]) 
+                    error_exist = update_user(row,request.form, row[0][0]) 
                     row = retrieve_all(session['username'])
-                    success = True
+                    if error_exist == True:
+                        return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                    else:
+                        success = True
+                        return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":
@@ -195,8 +199,8 @@ def info():
                         error_match = True
                         checkpwd = True
                         return render_template('info.html', error_match=error_match, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
-            print(row)
-            return render_template('info.html',success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
+            
+            return render_template('info.html', global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd= checkpwd)
     #se l'utente non è loggato, non sarà in grado di accedere a questa pagina
     else:
         username = "Guest"

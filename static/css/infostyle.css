@@ -55,7 +55,7 @@ header a:hover {
 }
 
 #success {
-    animation: cssAnimation 0s 5s forwards;
+    animation: cssAnimation 0s 3s forwards;
     visibility: visible;
 }
 

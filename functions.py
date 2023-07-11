@@ -24,6 +24,8 @@ def requirements_pass(NewPassword):
 
 #funzione che serve nel caso di eventuali cambiamenti dei dati va ad aggiornare lo specifico campo
 def update_user(row,form,username):
+    error_exist = False
+
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
         
@@ -31,18 +33,25 @@ def update_user(row,form,username):
         if form['FormEmail'] != row[0][1]:
             cur.execute("UPDATE users SET email = ? WHERE username=?", (form['FormEmail'],username))
             conn.commit()
-        print("fullname =" + row[0][2])
+        else:
+            error_exist = True
+            return error_exist
+    
     if form['fullname'] != row[0][2]:
         cur.execute("UPDATE users SET fullname = ? WHERE username=?", (form['fullname'],username))
         conn.commit()
+    else:
+        error_exist = True
+        return error_exist
     if form['age'] != row[0][3]:
         cur.execute("UPDATE users SET age = ? WHERE username=?", (form['age'],username))
         conn.commit()
     if form['gender'] != row[0][4]:
         cur.execute("UPDATE users SET gender = ? WHERE username=?", (form['gender'],username))
         conn.commit()
-
+    
     conn.close()
+    return error_exist
     
     
 #password generator for recovery password

@@ -28,9 +28,6 @@
                   <input type="text" class="form-control" id="FormUsername" name="FormUsername"  value="{{ global_username }}" disabled>
                 </div>
               </div>
-              {% if error_exist %}
-                <p style="color: red"><b>Username is already taken</b></p>
-              {% endif %}
             <!--User's Email-->
             <div class="row mb-3">
                 <label for="FormEmail" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
@@ -38,6 +35,9 @@
                   <input type="email" class="form-control" id="FormEmail"   value="{{ global_email }}" name="FormEmail">
                 </div>
               </div>
+              {% if error_exist %}
+                <p style="color:red"><b>Email is already taken!</b></p>
+              {% endif %}
             <!--User's FullName-->
             <div class="row mb-3">
                 <label for="fullname" class="col-sm-2 col-form-label">Fullname: <nobr></nobr></label>
