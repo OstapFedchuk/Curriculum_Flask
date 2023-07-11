@@ -61,19 +61,19 @@ def password_generator():
     return recovery_psw
 
 #funzione che serve per settare nel Db la recovery_psw
-def insert_rec_psw(username,password):
+def insert_rec_psw(User,password):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
-    cur.execute("UPDATE users SET password = ? WHERE username=?", (password,username))
+    cur.execute("UPDATE users SET password = ? WHERE username=? OR email=?", (password,User,User))
     conn.commit()
     conn.close()
 
 #funzione che va a recuperare la password heshed dal DB
-def retrieve_password(username):
+def retrieve_password(User):
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     #inserendo il username dell'utente andiamo a recuperare la passsword dal DB
-    cur.execute("SELECT password FROM users WHERE username = ? OR email = ?", (username,username))
+    cur.execute("SELECT password FROM users WHERE username = ? OR email = ?", (User,User))
     
     result = cur.fetchone()
     return result[0]   

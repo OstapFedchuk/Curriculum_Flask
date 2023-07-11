@@ -219,9 +219,9 @@ def recovery():
     error = False
 
     if request.method == 'POST':
-        username = request.form['username']
-        
-        if check_user_exist(username):
+        User = request.form['username']
+
+        if check_user_exist(User) or check_email_exist(User):
             #genero la password temporanea senza encoddarla
             clear_psw = password_generator()
             #encoddo la password generata
@@ -229,12 +229,12 @@ def recovery():
             #hesho la password encoddata
             hashed_rec_psw = bcrypt.hashpw(rec_psw, bcrypt.gensalt())
             #recupero la password dal DB
-            password = retrieve_password(username)
+            password = retrieve_password(User)
             # la password viene sostituita
             password = hashed_rec_psw
 
             #inserisco la nuova password all'interno del DB
-            insert_rec_psw(username,password)
+            insert_rec_psw(User,password)
             return render_template('recovery.html', rec_psw=clear_psw) #passo all'utente la password generata senza il sale
         
         else:
