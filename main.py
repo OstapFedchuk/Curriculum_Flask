@@ -73,7 +73,8 @@ def login():
     if request.method == 'POST':
         User = request.form['username']
         UserPassword = request.form['UserPassword']
-
+        
+        username_ret = retrieve_user(User)
         #controllo l'esistenza del username
         if check_user_exist(User) or check_email_exist(User):
             #recupero dal DB la password hashed
@@ -82,7 +83,7 @@ def login():
             if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw):
                 #salvo nella sessione il username e riporto nella pagina index
                 session['logged_in'] = True
-                session['username'] = User
+                session['username'] = username_ret
                 return redirect(url_for('index'))
             # se username non esiste mi ritorna al login.html con un errore visivo
             else:

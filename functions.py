@@ -96,6 +96,15 @@ def retrieve_email(username):
     result = cur.fetchone()
     return result
 
+#funzione che recupera il username basandosi sull'email
+def retrieve_user(User):
+    conn = sqlite3.connect("database.db")
+    cur = conn.cursor()
+    cur.execute("SELECT username FROM users WHERE username = ? OR email = ?", (User,User))
+
+    result = cur.fetchone()
+    return result[0]
+
 #funzione che memorizza il username e password nel database
 def register_user_to_db(username,email,fullname,age,gender,password):
     conn = sqlite3.connect('database.db')
