@@ -150,21 +150,32 @@ def info():
     error_match = False #errore se non metchano la NewPassword e ConfirmNewPassword
     requirements = False #nel caso in cui non vengano rispettati i requisiti minimi
     success = False #serve nel caso in cui le modifiche avvengono col successo
+    success_email = False
 
     if 'username' in session:
         if session['logged_in'] == True and session['username']:
             row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
-                #bottone per commettere cambio di (username,email,fullnam,age,gender)
-                if request.form['action'] == "one":
+                #bottone che serve per il controllo della mail nel caso del suo cambio
+                if request.form['action'] == 'first-one':
                     row = retrieve_all(session['username'])
-                    error_exist = update_user(row,request.form, row[0][0]) 
+                    error_exist = update_email(row,request.form,row[0][0])
                     row = retrieve_all(session['username'])
                     if error_exist == True:
                         return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
                     else:
-                        return render_template('info.html', success=True, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                        success_email = True
+                        return render_template('info.html', success_email=success_email, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                
+                #bottone per commettere cambio di (username,email,fullnam,age,gender)
+                if request.form['action'] == "one":
+                    row = retrieve_all(session['username'])
+                    error_exist = update_other_info(row,request.form,row[0][0]) 
+                    row = retrieve_all(session['username'])
+                    success = True
+                    return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":

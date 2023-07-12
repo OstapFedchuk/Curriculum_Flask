@@ -48,6 +48,10 @@ header a:hover {
     margin-top: -12%;
 }
 
+#contactForm {
+    margin-top: 0%;
+}
+
 #FormUsername:disabled {
     font-weight: bold;
     background-color: white;
@@ -55,6 +59,11 @@ header a:hover {
 }
 
 #success {
+    animation: cssAnimation 0s 3s forwards;
+    visibility: visible;
+}
+
+#success_email {
     animation: cssAnimation 0s 3s forwards;
     visibility: visible;
 }

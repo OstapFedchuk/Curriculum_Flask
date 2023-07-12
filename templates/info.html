@@ -18,7 +18,6 @@
     <div class="container py-4">
        <div class="contact">
             <h2><b>EDIT ACCOUNT</b></h2>
-            <h3>{{ global_username }}'s Info</h3>
        </div>
         <form id="contactForm" method="POST" action="{{ url_for('info') }}" class="form-horizontal">
             <!--User's Username-->
@@ -30,14 +29,19 @@
               </div>
             <!--User's Email-->
             <div class="row mb-3">
-                <label for="FormEmail" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
-                <div class="col-sm-4">
-                  <input type="email" class="form-control" id="FormEmail"   value="{{ global_email }}" name="FormEmail">
-                </div>
+              <label for="FormEmail" class="col-sm-2 col-form-label">Email: <nobr></nobr></label>
+              <div class="col-sm-4">
+                <input type="email" class="form-control" id="FormEmail" name="FormEmail" value="{{ global_email }}">
+                <br>
+                {% if error_exist %}
+                  <p style="color: red"><b>Email is already taken!</b></p>
+                {% endif %}
+                <button type="submit" class="btn btn-primary" name="action" value="first-one" id="verify-pass">Change Email</button>
+                {% if success_email %}
+                    <nobr style="color: green; margin-left: 5%;" id="success_email"><b>Email Changed!</b></nobr>
+                {% endif %}
               </div>
-              {% if error_exist %}
-                <p style="color:red"><b>Email is already taken!</b></p>
-              {% endif %}
+            </div>
             <!--User's FullName-->
             <div class="row mb-3">
                 <label for="fullname" class="col-sm-2 col-form-label">Fullname: <nobr></nobr></label>
