@@ -163,10 +163,10 @@ def info():
                     error_exist = update_email(row,request.form,row[0][0])
                     row = retrieve_all(session['username'])
                     if error_exist == True:
-                        return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                        return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                     else:
                         success_email = True
-                        return render_template('info.html', success_email=success_email, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                        return render_template('info.html', success_email=success_email, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                 
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
@@ -174,7 +174,7 @@ def info():
                     error_exist = update_other_info(row,request.form,row[0][0]) 
                     row = retrieve_all(session['username'])
                     success = True
-                    return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4])
+                    return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                 
                 
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
