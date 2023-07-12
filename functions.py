@@ -50,7 +50,7 @@ def update_user(row,form,username):
     conn.close()
     return error_exist
     
-    
+   # 
 #password generator for recovery password
 def password_generator():
     recovery_psw = ""
