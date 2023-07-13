@@ -49,6 +49,21 @@
         <h1 class="animated-text">TO</h1>
         <h1 class="animated-text">MY WEB APP</h1>
     </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app">{{ messaggio }}</div>
+    <script>
+        const { function } = Vue
+
+        function({
+            data() {
+                return {
+                    messaggio: "Hello Bitches"
+                }
+            }
+        }).mount('#app')
+    </script>
+
     <div>
         <img src="static/images/Pazancyk.JPG" alt="persona" id="myfoto">
     </div>
