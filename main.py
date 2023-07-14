@@ -6,6 +6,7 @@ from functions import *
 from flaskext.mysql import MySQL
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
 
 load_dotenv()
 #inizio programma   
@@ -20,6 +21,9 @@ mysql = MySQL(app, prefix="mysql", host=os.getenv('MYSQL_HOST'), user=os.getenv(
 mysql.init_app(app)
 # configuriamo la secret key situata nel 'config.py' per tenere in sicurezza la sessione del utente
 app.config.from_pyfile('config.py')
+
+#enable CORS(Cross Origin Resource Sharing)
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/prova', methods=['GET', 'POST'])
 def prova():
@@ -193,7 +197,7 @@ def info():
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
                     row = retrieve_all(session['username'],mysql)
-                    error_exist = update_other_info(row,request.form,row[0][0]) 
+                    error_exist = update_other_info(row,request.form,row[0][0],mysql) 
                     row = retrieve_all(session['username'],mysql)
                     success = True
                     return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
@@ -203,7 +207,7 @@ def info():
                 if request.form['action'] == "two":
                     YourPassword = request.form['YourPassword']
                     hashed_psw = retrieve_password(session['username'],mysql)
-                    if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
+                    if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw.encode('utf-8')):
                         checkpwd = True
                     # se no mi rimanda alla stessa pagina con un errore che le password non corrispondano
                     else:

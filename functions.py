@@ -33,7 +33,7 @@ def update_email(row,form,username,mysql):
 
     cur = mysql.get_db().cursor()
         
-    if not check_email_exist(form['FormEmail']):
+    if not check_email_exist(form['FormEmail'],mysql):
         if form['FormEmail'] != row[0][1]:
             cur.execute("UPDATE users SET email=%s WHERE username=%s", (form['FormEmail'],username))
     else:
