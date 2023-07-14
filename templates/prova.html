@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova</title>
+</head>
+<body>
+    <form id="contactForm" method="POST" action="{{ url_for('prova') }}">
+    <div class="mb-3">
+        <label class="form-label" for="username">User (Username or Email)</label>
+        <input class="form-control" id="name" type="text" placeholder="Name" name="username"/>
+    </div>
+    
+<!-- Password input -->
+    <div class="mb-3">
+        <label class="form-label" for="UserPassword">Password</label>
+        <input class="form-control" id="password" type="password" placeholder="password" name="UserPassword"/>
+    </div>
+    <!-- Remember Me-->
+    <!--Log In-->
+    <div class="d-grid">
+        <button class="btn btn-primary btn-lg" type="submit">Log In</button>
+    </div>
+</form>
+</body>
+</html>

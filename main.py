@@ -1,13 +1,35 @@
-import sqlite3
 from flask import Flask, redirect, url_for, render_template, request, session
 #from wtforms import StringField,SubmitField, DateField, EmailField, SelectField
 import bcrypt
 from functions import *
+#from flask_mysqldb import MySQL
+from flaskext.mysql import MySQL
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 #inizio programma   
 app = Flask(__name__)
+
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PORT'] = os.getenv('MYSQL_PORT')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+mysql = MySQL(app, prefix="mysql", host=os.getenv('MYSQL_HOST'), user=os.getenv("MYSQL_USER"),password=os.getenv('MYSQL_PASSWORD'),db=os.getenv('MYSQL_DB'), autocommit=True)
+mysql.init_app(app)
 # configuriamo la secret key situata nel 'config.py' per tenere in sicurezza la sessione del utente
 app.config.from_pyfile('config.py')
+
+@app.route('/prova', methods=['GET', 'POST'])
+def prova():
+    if request.method == "POST":
+        username = request.form['username']
+        UserPassword = request.form['UserPassword']
+
+        register_user_to_mysql(username,UserPassword,mysql)
+        return 'Ok Lets go'
+    return render_template('prova.html')
 
 
 #pagina iniziale del sito
@@ -26,7 +48,7 @@ def register():
     requirements = False # serve quando tutti campi non sono compilati
 
 
-    #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un database
+    #permetto di ottenere l'accesso ai dati inseriti e li memorizzo in un
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -44,15 +66,15 @@ def register():
             requirements = True
             return render_template('register.html', requirements=requirements)
 
-        #controlla se nel database è gia presente un'utente loggato con quel username
+        #controlla se nel è gia presente un'utente loggato con quel username
         # se esite allota errore diventa True e ti riporta sulla stessa pagina 
-        if check_user_exist(username) or check_email_exist(email):
+        if check_user_exist(username,mysql) or check_email_exist(email,mysql):
             error = True
             return render_template("register.html", error=error)
 
         # altrimenti salva tutti i dati nel DB e ti porta nella pagina del login
         if requirements_pass(not_hashed_psw):
-            register_user_to_db(username,email,fullname,age,gender,hashed_pw)
+            register_user_to_db(username,email,fullname,age,gender,hashed_pw,mysql)
             return redirect(url_for('login'))
         else:
             req_psw = True
@@ -71,13 +93,13 @@ def login():
         User = request.form['username']
         UserPassword = request.form['UserPassword']
 
-        username_ret = retrieve_user(User)
+        username_ret = retrieve_user(User,mysql)
         #controllo l'esistenza del username
-        if check_user_exist(User) or check_email_exist(User):
+        if check_user_exist(User,mysql) or check_email_exist(User,mysql):
             #recupero dal DB la password hashed
-            hashed_psw = retrieve_password(User)
+            hashed_psw = retrieve_password(User,mysql)
             #controllo se la PSW recuperata è uguale a quella inserita
-            if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw):
+            if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw.encode('utf-8')):
                 #salvo nella sessione il username e riporto nella pagina index
                 session['logged_in'] = True
                 session['username'] = username_ret
@@ -122,7 +144,7 @@ def contact():
             return render_template('contact.html', requirements=requirements, global_username=username)
 
         #se tutto viene soddisfatto allora mi salva nel DB tutte le informazioni dal contact.html
-        create_message(name,email,subject,message)
+        create_message(name,email,subject,message,mysql)
 
     if 'username' in session:
         username = session['username']
@@ -154,14 +176,14 @@ def info():
 
     if 'username' in session:
         if session['logged_in'] == True and session['username']:
-            row = retrieve_all(session['username']) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
+            row = retrieve_all(session['username'],mysql) #passo il username presente nella sessione e recupero tutti i dati dell'utente dal DB
 
             if request.method == "POST":
                 #bottone che serve per il controllo della mail nel caso del suo cambio
                 if request.form['action'] == 'first-one':
-                    row = retrieve_all(session['username'])
-                    error_exist = update_email(row,request.form,row[0][0])
-                    row = retrieve_all(session['username'])
+                    row = retrieve_all(session['username'],mysql)
+                    error_exist = update_email(row,request.form,row[0][0],mysql)
+                    row = retrieve_all(session['username'],mysql)
                     if error_exist == True:
                         return render_template('info.html', error_exist=error_exist, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                     else:
@@ -170,9 +192,9 @@ def info():
                 
                 #bottone per commettere cambio di (username,email,fullnam,age,gender)
                 if request.form['action'] == "one":
-                    row = retrieve_all(session['username'])
+                    row = retrieve_all(session['username'],mysql)
                     error_exist = update_other_info(row,request.form,row[0][0]) 
-                    row = retrieve_all(session['username'])
+                    row = retrieve_all(session['username'],mysql)
                     success = True
                     return render_template('info.html', success=success, global_username=row[0][0], global_email=row[0][1], global_fullname=row[0][2], global_age=row[0][3], global_gender=row[0][4], global_checkpwd=checkpwd)
                 
@@ -180,7 +202,7 @@ def info():
                 #bottone per controllare se la password del DB corrisponda con quella inserita dall'utente e sblocco gli altri 2 form
                 if request.form['action'] == "two":
                     YourPassword = request.form['YourPassword']
-                    hashed_psw = retrieve_password(session['username'])
+                    hashed_psw = retrieve_password(session['username'],mysql)
                     if bcrypt.checkpw(YourPassword.encode('utf-8'), hashed_psw):
                         checkpwd = True
                     # se no mi rimanda alla stessa pagina con un errore che le password non corrispondano
@@ -198,7 +220,7 @@ def info():
                     #se le passsword corrispondano e soddisfa i requisiti allora me la salva nel Db e mi slogga portando alla pagina index
                     if NewPassword == ConfirmNewPassword:
                         if requirements_pass(NewPassword_not_hash):
-                            insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()))
+                            insert_rec_psw(session['username'], bcrypt.hashpw(NewPassword.encode('utf-8'), bcrypt.gensalt()),mysql)
                             return redirect(url_for('logout'))
                         else:
                             checkpwd = True
@@ -225,7 +247,7 @@ def recovery():
     if request.method == 'POST':
         User = request.form['username']
 
-        if check_user_exist(User) or check_email_exist(User):
+        if check_user_exist(User,mysql) or check_email_exist(User,mysql):
             #genero la password temporanea senza encoddarla
             clear_psw = password_generator()
             #encoddo la password generata
@@ -233,12 +255,12 @@ def recovery():
             #hesho la password encoddata
             hashed_rec_psw = bcrypt.hashpw(rec_psw, bcrypt.gensalt())
             #recupero la password dal DB
-            password = retrieve_password(User)
+            password = retrieve_password(User,mysql)
             # la password viene sostituita
             password = hashed_rec_psw
 
             #inserisco la nuova password all'interno del DB
-            insert_rec_psw(User,password)
+            insert_rec_psw(User,password,mysql)
             return render_template('recovery.html', rec_psw=clear_psw) #passo all'utente la password generata senza il sale
         
         else:
