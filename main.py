@@ -99,7 +99,7 @@ def login():
             #recupero dal DB la password hashed
             hashed_psw = retrieve_password(User,mysql)
             #controllo se la PSW recuperata è uguale a quella inserita
-            if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw):
+            if bcrypt.checkpw(UserPassword.encode('utf-8'), hashed_psw.encode('utf-8')):
                 #salvo nella sessione il username e riporto nella pagina index
                 session['logged_in'] = True
                 session['username'] = username_ret
